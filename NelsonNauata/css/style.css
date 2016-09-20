@@ -1,0 +1,135 @@
+@import url(http://weloveiconfonts.com/api/?family=zocial);
+
+/* zocial */
+[class*="zocial-"]:before {
+  font-family: 'zocial', sans-serif;
+}
+
+
+body {
+    font-family: 'Muli', sans-serif;
+}
+
+header {
+    max-width: 100%;
+    margin: 0 auto;
+    background-image: url("../img/header-bg-image.jpg");
+    background-repeat: no-repeat;
+}
+
+.biopic {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.imgbiopic {
+    border: white solid 5px;
+    border-radius: 200px;
+    float: right;
+    margin-top: 140px;
+}
+
+.bio {
+    padding-top: 145px;
+}
+
+.name, .position, .location {
+    margin: 1% auto;
+    color: #fff;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.name, .title {
+    text-transform: uppercase;
+}
+
+.location {
+    margin-bottom: 2%;
+}
+
+.socialMedia {
+    padding-top: 5px;
+    margin-bottom: 1.5%;
+}
+
+.socialmediaimg {
+    padding-right: 10px;
+}
+
+.bioinfo {
+    margin-bottom: 5%;
+}
+
+.projects {
+    background-color: #eee;
+}
+
+.project-entry {
+}
+
+.publications {
+}
+
+.imgprojects,
+.imgpublications {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.divpubimage {
+
+}
+
+.pub-entry {
+    margin: 10px 0;
+}
+
+.miscellaneous {
+    background-color: #eee;
+    margin-bottom: 10px;
+}
+
+.misc-entry {
+}
+
+#socialmedia {
+    border-top: 2px #ccc solid;
+}
+
+.sm-entry {
+    line-height: 40px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.smicon {
+    color: #555;
+    margin-left: 25px;
+    font-size: 20px;
+}
+
+.smname {
+    font-size: 150%;
+}
+
+@media (max-width: 991px) {
+    .imgbiopic {
+        margin-right: auto;
+        margin-left: auto;
+        display: block;
+        float: none;
+    }
+
+    .bio {
+        padding-top: 0;
+    }
+
+    .name, .position, .location {
+        margin: 1% auto;
+        color: #000;
+    };
+}
