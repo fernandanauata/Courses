@@ -1,0 +1,140 @@
+* {
+    /*border: 1px solid red !important;*/
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box; 
+    font-family: "Raleway", sans-serif;
+}
+
+.grid {
+    margin: 0 auto;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.logo {
+    float: left;
+    max-width: 100%;
+    width: 100px;
+    display: block; 
+    height: auto;
+}
+
+.title {
+    float: right;
+    max-width: 100%;
+    width: 50%;
+    text-align: right;
+    margin-left:  auto;
+    margin-right:0;
+}
+
+.name {
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    color: #bcbbbb;
+    font-weight: 300;
+}
+
+.job {
+    color: #666;
+}
+
+.row {
+    max-width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+}
+
+.heroimage {
+    max-width: 100%;
+    display: block; 
+    height: auto;
+    width: auto;
+}
+
+.secondTitle {
+    text-transform: uppercase;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 10px;
+    color: #bcbbbb;
+}
+
+.container {
+    max-width: 100%;
+    width: 100%;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.project {
+    max-width: 100%;
+    width: 390px;
+    display: inline-block;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.imgproject {
+    max-width:100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border: 1px solid #f2f2f2;
+}
+
+.description {
+    padding: 0 10px;
+    margin-top: 0px;
+    color: #666666;
+}
+
+.link {
+    text-decoration: none;
+    padding: 10px;
+}
+
+footer {
+    max-width: 100%;
+    text-align: center;
+    font-size: 80%;
+    background-color: #f2f2f2;
+    line-height: 25px;
+}
+
+@media only screen and (max-width: 450px) {
+  .description {
+    font-size: 120%;
+  }
+}
+
+@media only screen and (max-width: 815px) {
+    .project {
+      max-width: 100%;
+      width: 100%;
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 20px;
+    }
+}
+
+@media only screen and (max-width: 869px) {
+  footer {
+      padding: 5px;
+      line-height: 120%;
+  }
+}
+
+@media only screen and (max-width: 1205px) {
+  .firstproject,
+  .secondproject {
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+}

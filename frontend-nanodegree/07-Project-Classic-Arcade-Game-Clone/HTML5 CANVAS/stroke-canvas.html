@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Stroke Canvas</title>
+</head>
+<body>
+	<canvas id="c" width="1200" height="1200"></canvas>
+
+	<script type="text/javascript">
+		
+		var c = document.querySelector("#c");
+		var ctx = c.getContext("2d");
+
+		// // ctx.fillStyle = "blue";
+		// ctx.fillStyle = "blue";
+		// ctx.fillRect(0,0,50,50);
+
+		// // Save state with blue fill
+		// ctx.save();
+		// ctx.fillStyle = "green";
+		// ctx.fillRect(100,100,10,10);
+		// // Restore to blue fill
+		// ctx.restore();
+
+		// ctx.fillRect(200,10,20,20);
+
+		// ctx.strokeStyle = "#33cc33";
+
+		// ctx.strokeRect(50, 50, 100, 100);
+		// ctx.beginPath();
+		// ctx.moveTo(75, 75);
+		// ctx.lineTo(125, 125);
+		// ctx.lineTo(125, 75);
+
+		// ctx.fillStyle = "blue";
+		// ctx.fill();
+
+		ctx.font = "36pt Impact";
+		ctx.textAlign = "center";
+
+		ctx.fillStyle = "white";
+  		ctx.fillText("CANVAS MEMES!", c.width / 2, 40);
+
+  		ctx.strokeStyle = "black";
+  		ctx.lineWidth = 3;
+  		ctx.strokeText("CANVAS MEMES!", c.width / 2, 40);
+
+	</script>
+</body>
+</html>

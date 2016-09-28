@@ -45,6 +45,18 @@ header {
     text-transform: uppercase;
 }
 
+.sections {
+   text-transform: uppercase; 
+}
+
+.title {
+    text-align: center;
+}
+
+.description {
+    text-align: justify;
+}
+
 .location {
     margin-bottom: 2%;
 }
@@ -63,13 +75,14 @@ header {
 }
 
 .projects {
-    background-color: #eee;
+    border-top: 1px #ccc solid;
 }
 
 .project-entry {
 }
 
 .publications {
+    border-top: 1px #ccc solid;
 }
 
 .imgprojects,
@@ -89,15 +102,19 @@ header {
 }
 
 .miscellaneous {
-    background-color: #eee;
+    border-top: 1px #ccc solid;
     margin-bottom: 10px;
 }
 
 .misc-entry {
 }
 
+.misclink {
+    padding-left: 150px;
+}
+
 #socialmedia {
-    border-top: 2px #ccc solid;
+    border-top: 1px #ccc solid;
 }
 
 .sm-entry {
@@ -114,6 +131,7 @@ header {
 
 .smname {
     font-size: 150%;
+    padding-right: 10px;
 }
 
 @media (max-width: 991px) {
@@ -128,8 +146,13 @@ header {
         padding-top: 0;
     }
 
+    .socialMedia {
+        text-align: center;
+    }
+
     .name, .position, .location {
         margin: 1% auto;
         color: #000;
+        text-align: center;
     };
 }

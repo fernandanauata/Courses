@@ -1,0 +1,101 @@
+/*
+
+Your styles go here!
+
+Hint! You'll probably want to start by styling:
+  * <body>
+  * <article>
+  * <h1>
+  * <img>
+
+I've left some boilerplate below for you.
+
+*/
+
+/* zocial */
+[class*="zocial-"]:before {
+  color: black;
+  display: inline-block;
+  font-family: 'zocial', sans-serif;
+  padding: 2px;
+  }
+
+a:hover [class*="zocial-"]:before {
+  color: #3d85c6;
+}
+
+div#social a {
+  margin: 0 1em 0 0;
+}
+
+div#social a:last-of-type {
+  margin: 0;
+}
+
+div#social {
+  line-height: 2em;
+  text-align: center;
+  background-color: #ccc;
+  width: 50em;
+}
+
+body {
+	align-items: center;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+}
+
+article {
+	  align-items: center;
+	  display: flex;
+	  flex-direction: column;
+	  max-width: 50em;
+}
+
+header {
+	max-width: 100%;
+}
+
+title {
+  text-align: center;
+	margin: 0 auto;
+}
+
+h1 {
+  text-transform: uppercase;
+}
+
+#logo {
+	fill: #666;
+  	height: 6vw;
+  	width: 6vw;
+  margin: 0 auto;
+}
+
+
+header:hover svg#logo {
+  fill: #3d85c6;
+  -webkit-filter: drop-shadow(3px 3px 3px #ddd);
+  filter: drop-shadow(3px 3px 3px #ddd);
+}
+
+
+img {
+	max-width: 100%;
+}
+
+figure {
+	width: 50em;
+}
+
+figcaption {
+	text-align: center;
+	font-weight: 800;
+}
+
+picture#banner img {
+  margin: auto;
+  max-width: 100vw;
+  width: 100vw;
+}

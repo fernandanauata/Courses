@@ -1,0 +1,46 @@
+/* add your CSS here */
+#card {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ccc;
+  padding: 15px 15px 15px 15px;
+  width: 300px;
+  box-shadow: 10px 10px 5px 0px #ccc;
+}
+
+#description {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ccc;
+  width: 300px;
+  margin: auto;
+  display: block;
+}
+
+.list {
+  list-style: none;
+}
+
+.fact {
+  font-style: italic;
+}
+
+.list,
+.fact,
+.description {
+  padding: 0px 10px 0px 10px;
+}
+
+.title {
+  margin: auto;
+  display: block;
+  padding: 0px 0px 10px 0px;
+}
+
+.label{
+  font-weight: bold;
+}
+
+img {
+  margin-bottom:10px
+}
