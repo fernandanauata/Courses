@@ -10,10 +10,11 @@ header {
 }
 
 .instructions {
-	max-width: 670px;
+	max-width: 800px;
 	margin: 0 auto;
 }
 
 .text-instructions {
 	font-family: 'Roboto', sans-serif;
+	font-weight: 80%;
 }
