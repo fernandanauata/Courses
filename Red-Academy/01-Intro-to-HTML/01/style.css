@@ -1,0 +1,39 @@
+body {
+	max-width: 1140px;
+	display: block;
+	margin: 0 auto;
+}
+
+p {
+	font-size: 200%;
+	background-color: lightgreen;
+	text-align: center;
+	margin: 0 auto;
+	display: inline-block;
+	width: 49.76%;
+	line-height: 100px;
+}
+
+p:hover {
+	background-color: red;
+}
+
+.half:hover {
+	font-size: 300%;
+	display: block;
+	margin: 0 auto;
+}
+
+h1 {
+	text-align: center;
+}
+
+h1:hover {
+	font-family: sans-serif;
+	font-size: 400%;
+}
+
+img {
+	max-width: 100%;
+}
+

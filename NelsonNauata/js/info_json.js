@@ -2,7 +2,7 @@ var HTMLbioname = '';
 var HTMLbiotitle = '';
 var HTMLbioschool = '';
 
-var bio = "Nome/Titulo/School/TA/Gruvi/Supervisors/Lee Cooper http://vml.cs.sfu.ca/";
+var bio = "Hi! I'm Nelson, a Master student under supervision of Prof. Greg Mori and Richard Zhang at Simon Fraser University. Currently, I'm part of the Gruvi Lab at SFU and have some projects ongoing with Prof. Lee Cooper from Emory University and Georgia Institute of Technology.";
 
 var HTMLprojectstart = '<div class="project-entry col-lg-4 col-md-4 col-sm-6 col-xs-12"></div>';
 var HTMLprojectimage = '<img class="imgprojects" src="%data%">';
@@ -31,7 +31,7 @@ var info = {
     "projects": [{
         "image": "img/proj01.jpg",
         "title": "Multi-resolution Analysis of Pathology Data with Convolutional Neural Networks (CNNs) - Google Summer Of Code 2016",
-        "description": "The ultimate goal of this project is exploring high and low-resolution images techniques for performing high-level inferences over complete tissue medical slides, which presents a few challenging aspects regarding storage and processing. The high-level inferences consist of learning patterns between summarized slides and target labels for solving a specific problem. For example, it could be interesting to calculate the abundance (by area) of regions like angiogenesis, necrosis, and infiltrating lymphocytes to infer patient-level characteristics. A tissue slide can easily reach around 20GB in-memory, which turns intractable many approaches of feeding those slides entirely to a classifier. One recent method for addressing this problem is sampling regions based on low-resolution features (i.e. texture, boundaries) for extracting information about the tissue. Moreover, this method can also help with speeding up the processing, since after cropping the proposed regions, the problem would be turned into a tractable learning problem.",
+        "description": "The ultimate goal of this project is exploring high and low-resolution images techniques for performing high-level inferences over complete tissue medical slides, which presents a few challenging aspects regarding storage and processing. The high-level inferences consist of learning patterns between summarized slides and target labels for solving a specific problem. For example, it could be interesting to calculate the abundance (by area) of regions like angiogenesis, necrosis, and infiltrating lymphocytes to infer patient-level characteristics. A tissue slide can easily reach around 20GB in-memory, which turns intractable many approaches of feeding those slides entirely to a classifier.",
         "url": "https://github.com/cooperlab/RegionProposal"
     }, {
         "image": "img/proj02.jpg",
@@ -39,25 +39,27 @@ var info = {
         "description": "Abstract—In this project, we investigate the use of a new descriptor for Deep Learning, called Visual Rhythms (VR), for the task of action recognition. In addition, the Visual Rhythm descriptor is combined with the state-of-the-art descriptor, improved dense trajectories (iDT), and convolutional features extracted from a Deep Convolutional Neural Network named C3D. Moreover, we have tested our extracted features using Support Vector Machines (SVMs) on HMDB51, which is currently a challenging dataset. Our tests have shown the need for more complex feature in order to obtain significant improvement in terms of accuracy.",
         "url": ""
     }, {
-        "image": "img/proj03.jpg",
-        "title": "Toronto Deep Learning Demos",
-        "description": "Online Web Application and Mobile application demo using Convolutional Neural Networks for image classification.",
-        "url": "http://deeplearning.cs.toronto.edu/"
-    }, {
-        "image": "img/nelson_project-04.gif",
-        "title": "Tela por persistência em visão",
-        "description": "Este projeto aplica o conceito de persistência de visão para gerar um letreiro giratório com apenas uma fileira de 8 LEDs no espaço. Foi necessário estimar a frequência das piscadas dos LEDs em função da rotação da base do letreiro que consiste de um motor DC (cooler). Os resultados podem ser conferidos neste <a href:'http://www.dca.fee.unicamp.br/courses/EA076/2s2013/projetos/fotos/MVI_0706.MOV'>vídeo.</a>",
-        "url": "http://www.dca.fee.unicamp.br/courses/EA076/2s2013/projetos/turmaI.html#jaime_nelson"
-    }, {
         "image": "img/proj05.jpg",
         "title": "Decoding Tumor Microenvironments with TissueNet Deep Convolutional Learning - Google Summer Of Code 2015",
-        "description": "To provide scalable and accurate characterization of large pathology archives we have developed TissueNet, a software framework based on parallel deep convolutional learning. TissueNet does not require image segmentation and uses feature learning methods to learn optimal taskspecific features for classifying histologic entities in an unbiased manner. We demonstrate the capabilities of TissueNet using whole slide images from The Cancer Genome Atlas project, where we analyze the formation of blood vessels in brain tumors. We demonstrate that TissueNet’s feature learning methods provide better classification than feature engineering approaches based on image segmentation, and illustrate how the TissueNet software framework can scale to analyze realistic datasets that contain terabytes of image data and hundreds-of-millions of cells.",
+        "description": "To provide scalable and accurate characterization of large pathology archives we have developed TissueNet, a software framework based on parallel deep convolutional learning. TissueNet does not require image segmentation and uses feature learning methods to learn optimal taskspecific features for classifying histologic entities in an unbiased manner. We demonstrate the capabilities of TissueNet using whole slide images from The Cancer Genome Atlas project, where we analyze the formation of blood vessels in brain tumors.",
         "url": "https://github.com/cooperlab/CellNet"
     }, {
         "image": "img/proj06.jpg",
         "title": "Object Recognition on Images usingr-OSGi - Facebook Open Academy 2015",
-        "description": "In this final year project for the degree of Bachelor of Science in Computer Engineering, we created a remote communication system using Remote Open Service Gateway Initiative (R-OSGi), a framework that supports the implementation of component-based and serviceoriented applications in Java. The client-side is able to send visual resources such as captured images to the server-side, which contains a machine learning algorithm, more precisely Convolutional Neural Network models implemented with the Caffe API, for performing classification and returning the top five tags of classes corresponding to the Object Recognition problem. By the end of the semester we were able to create a fully functional system, which communicates using the R-OSGi Technology and classify the provided data using the pretrained models of Convolutional Neural Networks.",
+        "description": "In this final year project for the degree of Bachelor of Science in Computer Engineering, we created a remote communication system using Remote Open Service Gateway Initiative (R-OSGi), a framework that supports the implementation of component-based and serviceoriented applications in Java. The client-side is able to send visual resources such as captured images to the server-side, which contains a machine learning algorithm, more precisely Convolutional Neural Network models implemented with the Caffe API, for performing classification and returning the top five tags of classes corresponding to the Object Recognition problem.",
         "url": "https://github.com/nmizoguchi/pfg-r-osgi"
+    },
+    {
+        "image": "img/nelson_project-04.gif",
+        "title": "persistence of vision sign",
+        "description": "This project consists of an implementation of a live digital sign using a persistence of vision technique, which requires only one line of 8 LEDS. To accomplish this task, was necessary to estimate the frequency of the blinks and synchronize it with the rotation frequency of a DC motor.",
+        "url": "http://www.dca.fee.unicamp.br/courses/EA076/2s2013/projetos/turmaI.html#jaime_nelson"
+    },
+    {
+        "image": "img/proj03.jpg",
+        "title": "Toronto Deep Learning Demos",
+        "description": "Online Web Application and Mobile application demo using Convolutional Neural Networks for image classification.",
+        "url": "http://deeplearning.cs.toronto.edu/"
     }],
 
     "publications": [{
