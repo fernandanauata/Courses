@@ -40,6 +40,11 @@ function loadData() {
     // Wikipedia AJAX
     var WikiURl = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + city + "&format=json&callback=wikiCallback";
 
+    //If the API doesn't work a Fail Message appears
+    var wikiRequestTimeout = setTimeout(function(){
+        $wikiElem.text("failed to get wikipedia resources");
+    }, 8000);
+
     $.ajax({
         url: WikiURl,
 
@@ -55,7 +60,9 @@ function loadData() {
               var article = wikiArticles[i];
 
               $('#wikipedia-links').append('<li>' + '<a ' + 'href="' + 'https://www.wikipedia.org/wiki/' + article + '">' + article + '</a>' + '</li>');
-            }
+            };
+            //If it works it clears the timeout
+            clearTimeout(wikiRequestTimeout);
         }
     });
     return false;

@@ -1,0 +1,17 @@
+body {
+  font-family: sans-serif;
+}
+
+.flexbox {
+  display: flex;
+  flex-direction: row;
+}
+
+.firstcat {
+  padding-right: 5em;
+}
+
+#firstcat,
+#secondcat {
+  height: 426px;
+}
