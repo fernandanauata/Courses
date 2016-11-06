@@ -19,7 +19,7 @@
 
 <body>
     <nav>
-        <div class="container">
+        <div class="smallcontainer container navtablet">
             <div class="navlogo">
                 <img src="images/perfect-paddles-logo.svg" alt="Perfect Paddles Logo">
             </div>
@@ -33,7 +33,7 @@
         </div>
     </nav>
 
-    <header class="header container">
+    <header class="header  container">
         <div class="text smallcontainer">
             <p class="enjoythe">ENJOY THE</p>
             <h1 class="greatoutdoors">Great Outdoors</h1>
@@ -54,10 +54,10 @@
             <div class="soloimage">
                 <img src="images/sunset-kayak.jpg" alt="Kayak on sunset">
             </div>
-            <div class="soloimage imgmiddle">
+            <div class="soloimage">
                 <img src="images/coffee-adventure.jpg" alt="Coffe kayak mug">
             </div>
-            <div class="soloimage imgmiddle lastimg">
+            <div class="soloimage">
                 <img src="images/girl-in-kayak.jpg" alt="Girl in a Kayak">
             </div>
         </div>
@@ -65,16 +65,43 @@
         <article class="rentals">
             <h2><a id="rentals"></a>Rentals</h2>
             <div class="rentalinfo smallcontainer">
-                <div class="rentalitem">
-                    <p>All rental prices include basic paddles, life jackets, splash protection, and a safety demonstration.
-                        <br /> Please note that we require 24 hours notice for all cancellation and late return will be charged accordingly.
-                        <br /> Call 604-604-6040 to book now!</p>
+                <div class="rentalitem rentaltext">
+                    <p>All rental prices include basic paddles, life jackets, splash protection, and a safety demonstration. </p>
+                    <p>Please note that we require 24 hours notice for all cancellation and late return will be charged accordingly.</p>
+                    <p>Call <a href="#">604-604-6040</a> to book now!</p>
                 </div>
-                <div class="rentalitem">
-                    <p>All rental prices include basic paddles, life jackets, splash protection, and a safety demonstration.
-                        <br /> Please note that we require 24 hours notice for all cancellation and late return will be charged accordingly.
-                        <br /> Call 604-604-6040 to book now!</p>
-                    <table> </table>
+                <div class="rentalitem rentaltable">
+                    <table>
+                            <tr class="tabletop">
+                                <td>Duration</td>
+                                <td>Single Kayak</td>
+                                <td>Double Kayak</td>
+                            </tr>
+
+                            <tr>
+                                <td class="tableduration">2 hours</td>
+                                <td class="tableprice">$35</td>
+                                <td class="tableprice">$55</td>
+                            </tr>
+
+                            <tr>
+                                <td class="tableduration">1 Day</td>
+                                <td class="tableprice">$90</td>
+                                <td class="tableprice">$130</td>
+                            </tr>
+
+                            <tr>
+                                <td class="tableduration">Extra Day</td>
+                                <td class="tableprice">$45</td>
+                                <td class="tableprice">$65</td>
+                            </tr>
+
+                            <tr>
+                                <td class="tableduration">Season Pass</td>
+                                <td class="tableprice">$249</td>
+                                <td class="tableprice">$349</td>
+                            </tr>
+                    </table>
                 </div>
             </div>
         </article>
@@ -82,32 +109,39 @@
         <article class="location smallcontainer">
 
             <h2><a id="location"></a>Location</h2>
-            <p>Perfect Paddles Kayak Rentas Co. offers you the unique opportunity to experience the great outdoor in one of our single or double kayaks. We cater to all skill levels and abilities and offer a variety of lessons and tours too.</p>
+            <p>Come visit us at our location on Cornwall Avenue and Yew Street in Vancouver:</p>
         </article>
 
         <div class="map smallcontainer">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2603.2014148051353!2d-123.1571647843109!3d49.27258057933022!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5486724ac9841e85%3A0x870e9cdab5d0e83b!2sYew+St+%26+Cornwall+Ave%2C+Vancouver%2C+BC!5e0!3m2!1sen!2sca!4v1477366809588" frameborder="0" style="border:0" allowfullscreen></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2603.2014148051353!2d-123.1571647843109!3d49.27258057933022!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5486724ac9841e85%3A0x870e9cdab5d0e83b!2sYew+St+%26+Cornwall+Ave%2C+Vancouver%2C+BC!5e0!3m2!1sen!2sca!4v1477366809588" allowfullscreen></iframe>
         </div>
     </div>
 
     <footer>
         <div class="container smallcontainer footer">
             <div class="information">
-                <p>&copy;2016 Perfect Paddles Kayak Co. Powered by HTML and CSS.</p>
-                <p>604-604-6040. info@perfectpaddles.com</p>
-                <p>Cornwall Avenue & Yew Street Vancouver, BC, Canada</p>
+                <p>&copy;2016 Perfect Paddles Kayak Co. <br> Powered by HTML and CSS.</p>
+                <p>604-604-6040. <a href="#">info@perfectpaddles.com</a></p>
+                <p>Cornwall Avenue & Yew Street <br> Vancouver, BC, Canada</p>
             </div>
 
             <div class="socialmedia">
-                <div class="socialmedia-inside">
-                    <ul>
-                        <li><i class="fa fa-facebook" aria-hidden="true"></i>Facebook</li>
-                        <li><i class="fa fa-twitter" aria-hidden="true"></i>Twitter</li>
-                        <li><i class="fa fa-instagram" aria-hidden="true"></i>Instagram</li>
-                        <li><i class="fa fa-pinterest" aria-hidden="true"></i>Pinterest</li>
-                        <li><i class="fa fa-google-plus" aria-hidden="true"></i>Google+</li>
-                    </ul>
-                </div>
+              <i class="fa fa-facebook" aria-hidden="true"></i>
+                  <i class="fa fa-twitter" aria-hidden="true"></i>
+                  <i class="fa fa-instagram" aria-hidden="true"></i>
+                  <i class="fa fa-pinterest" aria-hidden="true"></i>
+                  <i class="fa fa-google-plus" aria-hidden="true"></i>
+              </ul>
+            </div>
+
+            <div class="socialmediatablet">
+              <ul>
+                  <li><i class="fa fa-facebook" aria-hidden="true"></i>Facebook</li>
+                  <li><i class="fa fa-twitter" aria-hidden="true"></i>Twitter</li>
+                  <li><i class="fa fa-instagram" aria-hidden="true"></i>Instagram</li>
+                  <li><i class="fa fa-pinterest" aria-hidden="true"></i>Pinterest</li>
+                  <li><i class="fa fa-google-plus" aria-hidden="true"></i>Google+</li>
+              </ul>
             </div>
         </div>
     </footer>
