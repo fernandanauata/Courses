@@ -1,0 +1,29 @@
+.catclicker {
+  text-align: center;
+}
+
+.catlist {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #969696;
+  border-radius: 2%;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+  font-size: 150%;
+  line-height: 2em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #53667E;
+}
+
+
+li:not(:first-child) {
+  border-top: 1px solid #969696;
+}
+
+li:hover {
+  background: #E5E5E7;
+}
