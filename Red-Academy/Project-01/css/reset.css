@@ -17,9 +17,9 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 
-/* HTML5 display-role reset for older browsers */
+ HTML5 display-role reset for older browsers 
 
-/*article, aside, details, figcaption, figure,
+article, aside, details, figcaption, figure,
 footer, hgroup, menu, nav, section {
 	display: block;
 }
@@ -36,4 +36,4 @@ blockquote:before, blockquote:after,
 q:before, q:after {
 	content: '';
 	content: none;
-}*/
+}
