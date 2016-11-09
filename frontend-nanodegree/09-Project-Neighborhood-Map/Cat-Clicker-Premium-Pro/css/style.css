@@ -27,3 +27,8 @@ li:not(:first-child) {
 li:hover {
   background: #E5E5E7;
 }
+
+form p {
+  margin-top: 0.5em;
+  margin-bottom: 1px;
+}
