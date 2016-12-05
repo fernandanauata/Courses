@@ -193,6 +193,7 @@ menu {
     width: 100%;
     height: 100%;
     float: right;
+    display: none;
 }
 
 .aboutme-left-container {
@@ -231,7 +232,6 @@ menu {
     -ms-flex-line-pack: center;
     align-content: center;
     height: 100%;
-    overflow-y: scroll;
     height: 100vh;
 }
 
@@ -278,18 +278,6 @@ figcaption {
     float: left;
 }
 
-.turqoise {
-    background-color: yellow;
-}
-
-.green {
-    background-color: green;
-}
-
-.bordeaux {
-    background-color: red;
-}
-
 .panel {
     height: 100%;
     width: 25%;
@@ -326,6 +314,10 @@ figcaption {
     justify-content: center;
 }
 
+.secondportfolio h2 {
+  text-align: center;
+}
+
 .carousel {
     margin: 0 auto;
     max-width: 400px;
@@ -333,7 +325,7 @@ figcaption {
 
 .carousel div {
     background-color: #343434;
-    height: 400px;
+    height: 100%;
     position: relative;
 }
 
@@ -366,6 +358,28 @@ figcaption {
     -ms-flex-pack: center;
     justify-content: center;
 }
+.message {
+  width: 342px;
+}
+
+form button {
+  display: block;
+  margin: 0 auto;
+  border: solid #a0a0a0 2px;
+  padding: 2%;
+  border-radius: 3px;
+  background-color: #E5E5E7;
+}
+
+form button:hover {
+    border: solid #9A3A4C 2px;
+    color: #9A3A4C;
+    text-decoration: none;
+}
+
+.socialmedia a {
+    color: #343434;
+}
 
 .socialmedia {
     display: -webkit-box;
@@ -373,10 +387,6 @@ figcaption {
     display: flex;
     -ms-flex-pack: distribute;
     justify-content: space-around;
-}
-
-.socialmedia a {
-    color: #343434;
 }
 
 .socialmedia a:hover {
@@ -412,14 +422,10 @@ footer {
         width: 50%;
         height: 100%;
         float: right;
-    }
-    .socialmedia {
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        justify-content: center;
+        display: block;
     }
     .socialmedia a:not(:last-child) {
-        padding-right: 4%;
+        padding-right: 20%;
     }
     .resumebutton {
         padding: 1% 2% 1% 2%;
@@ -446,16 +452,10 @@ footer {
     .aboutme-container picture {
         width: 40%;
     }
-    .lastsection {
-        height: 100vh;
-    }
-    .secondportfolio, .carousel {
-        height: 50vh;
-    }
 }
 
 @media screen and (min-width: 2040px) {
     header {
         background: url("../img/header-img/fernanda-nauata-xlarge-header-img.jpg") no-repeat center center fixed #343434;
     }
-}s
+}
