@@ -1,0 +1,28 @@
+<!-- This is the corresponding "starter code" for 05_Interpreting Geocoding Responses in Udacity
+and Google's Maps API Course, Lesson 2 -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geocoding service</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <!-- CSS file -->
+      <link rel="stylesheet" href="style.css" type="text/css">
+  </head>
+  <body>
+    <div id="floating-panel">
+      <input id="address" type="textbox" VALUE="Red Fort, Delhi">
+      <input id="submit" type="button" value="Geocode">
+      <div id="firstComponent">
+      </div>
+      <div id="secondComponent">
+      </div>
+    </div>
+    <div id="map"></div>
+      <script src="script.js"></script>
+    <!--TODO: Insert your API Key in the below call to load the API.-->
+    <script async defer
+     src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBEDV77d_uZabxz5tFauuaLflbk8LSsB4A&callback=initMap">
+    </script>
+  </body>
+</html>
