@@ -15,6 +15,7 @@ $(function() {
 
     //Smal Portfolio Carousel
     $('.carousel').slick({
+      arrows: false,
         autoplay: true,
         centerMode: true,
         centerPadding: '60px',

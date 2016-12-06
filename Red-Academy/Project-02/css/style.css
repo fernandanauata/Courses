@@ -45,6 +45,10 @@ h1 {
     width: 100%;
 }
 
+section {
+  width: 100vw;
+}
+
 
 /*CSS ANIMATION*/
 
@@ -269,6 +273,7 @@ figcaption {
     width: 400vw;
     /* to contain 4 panels, each with 100% of window width */
     height: 100vh;
+    position: relative;
 }
 
 .panel {
@@ -285,19 +290,36 @@ figcaption {
     float: left;
 }
 
-.portfolio h1, .portfolio p {
-    padding-left: 15px;
-    padding-right: 15px;
+.overlap-text {
+  position: absolute;
+  width: 100vw;
 }
-
-.portfolio h1 {
-    margin-top: 20px;
+.overlap-text h1 {
+  padding-bottom: 0;
 }
-
-.portfolio p {
-    text-align: center;
+.overlap-text p {
+  width: 80vw;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
 }
-
+.portfoliobutton-container {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  margin-top: 1%;
+}
+.portfoliobutton {
+    border: solid #333333 2px;
+    padding: 2%;
+    border-radius: 3px;
+    color: #333333;
+}
+.portfoliobutton:hover {
+    border: solid #9A3A4C 2px;
+    color: #9A3A4C;
+    text-decoration: none;
+}
 
 /*CSS FOR THE SLIDE SECOND PORTFOLIO SECTION*/
 
@@ -312,6 +334,7 @@ figcaption {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
+    background-color: #E5E5E7;
 }
 
 .secondportfolio h2 {
@@ -334,8 +357,8 @@ figcaption {
     width: 100%;
 }
 
-.slick-prev:before, .slick-next:before {
-    color: #343434;
+.slick-prev:before, .slick-next:before, .slick-prev:hover:before, .slick-prev:focus:before, .slick-next:hover:before, .slick-next:focus:before {
+  display: hidden;
 }
 
 
@@ -427,8 +450,12 @@ footer {
     .socialmedia a:not(:last-child) {
         padding-right: 20%;
     }
-    .resumebutton {
-        padding: 1% 2% 1% 2%;
+    .portfoliobutton-container {
+      margin-top: 0;
+    }
+    .resumebutton,
+    .portfoliobutton {
+        padding: 0.5% 0.5% 0.5% 0.5%;
     }
     .carousel {
         max-width: 100vw;
@@ -445,6 +472,9 @@ footer {
     .container {
         max-width: 1140px;
     }
+    .overlap-text p {
+      width: 40vw;
+    }
     .aboutme {
         height: 100vh;
         width: 100vw;
@@ -457,5 +487,9 @@ footer {
 @media screen and (min-width: 2040px) {
     header {
         background: url("../img/header-img/fernanda-nauata-xlarge-header-img.jpg") no-repeat center center fixed #343434;
+    }
+
+    .portfoliobutton-container {
+      margin-top: 1%;
     }
 }
