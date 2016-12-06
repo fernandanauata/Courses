@@ -1,8 +1,8 @@
 $(function() {
     //Check the window width
-    var width = $(window).width()
+    var width = $(window).width();
         //Check the window height
-    height = $(window).height();
+        height = $(window).height();
 
     // Initalize sidebar
     var sidebar = $(".sidebar-menu").sidebar({
@@ -38,7 +38,4 @@ $(function() {
             }
         }]
     });
-
-
-
 });

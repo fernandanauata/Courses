@@ -24,9 +24,7 @@ font-face {
     font-style: normal;
 }
 
-
 /*MAIN CSS SET UP*/
-
 body {
     font-family: 'Gotham', Arial, sans-serif;
 }
@@ -49,9 +47,7 @@ section {
   width: 100vw;
 }
 
-
 /*CSS ANIMATION*/
-
 @-webkit-keyframes backgroundAnimate {
     from {
         left: 0;
@@ -76,7 +72,6 @@ section {
 
 
 /*CSS FOR THE HEADER SECTION*/
-
 header {
     background: url("../img/header-img/fernanda-nauata-phone-horizontal-header-img.jpg") #343434;
     background-size: cover;
@@ -154,7 +149,6 @@ menu {
 
 
 /*CSS FOR THE ABOUT ME SECTION*/
-
 .aboutme {
     width: 100vw;
     height: 100vh;
@@ -260,7 +254,6 @@ figcaption {
 
 
 /*CSS FOR THE SLIDE PORTFOLIO SECTION*/
-
 #pinContainer {
     width: 100vw;
     height: 100vh;
@@ -294,21 +287,29 @@ figcaption {
   position: absolute;
   width: 100vw;
 }
+
 .overlap-text h1 {
   padding-bottom: 0;
 }
+
 .overlap-text p {
   width: 80vw;
   display: block;
   margin: 0 auto;
   text-align: center;
 }
+
 .portfoliobutton-container {
   width: 100vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   margin-top: 1%;
 }
+
 .portfoliobutton {
     border: solid #333333 2px;
     padding: 2%;
@@ -322,7 +323,6 @@ figcaption {
 }
 
 /*CSS FOR THE SLIDE SECOND PORTFOLIO SECTION*/
-
 .secondportfolio {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -361,9 +361,7 @@ figcaption {
   display: hidden;
 }
 
-
 /*CSS FOR THE CONTACT SECTION*/
-
 .contact {
     padding-bottom: 20px;
     background-color: #E5E5E7;
@@ -416,9 +414,7 @@ form button:hover {
     color: #9A3A4C;
 }
 
-
 /*CSS FOR THE FOOTER SECTION*/
-
 footer {
     background-color: #343434;
     color: #E5E5E7;
@@ -426,9 +422,7 @@ footer {
     text-align: center;
 }
 
-
 /*MEDIA QUERIES*/
-
 @media screen and (min-width: 600px) {
     header {
         background: url("../img/header-img/fernanda-nauata-tablet-horizontal-header-img.jpg") #343434;
