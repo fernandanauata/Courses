@@ -150,10 +150,15 @@ menu {
 
 
 /*CSS FOR THE ABOUT ME SECTION*/
+.aboutme-mobile-lef {
+  width: 100vw;
+  height: 100vh;
+}
+
 .aboutme {
     width: 100vw;
     height: 100vh;
-    display: none;
+    /*display: none;*/
 }
 
 .aboutme-left {
@@ -187,15 +192,13 @@ menu {
     animation-duration: 500s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
-    width: 100vw;
-}
+  }
 
 .aboutme-right {
     background-color: #ECEFF1;
     width: 100%;
     height: 100%;
     float: right;
-    display: none;
 }
 
 .aboutme-left-container {
@@ -383,6 +386,10 @@ figcaption {
     -ms-flex-pack: center;
     justify-content: center;
 }
+.contact p {
+  width: 90%;
+  text-align: center;
+}
 .message {
   width: 342px;
 }
@@ -404,6 +411,7 @@ form button:hover {
 
 .socialmedia a {
     color: #343434;
+    padding-right: 10%;
 }
 
 .socialmedia {
@@ -437,8 +445,8 @@ footer {
     .aboutme-mobile {
       height: 0;
     }
-    .aboutme-mobile .aboutme-left,
-    .aboutme-mobile .aboutme-right {
+    .aboutme-mobile .aboutme-mobile-left,
+    .aboutme-mobile .aboutme-mobile-right {
       display: none;
     }
     .aboutme-left {
