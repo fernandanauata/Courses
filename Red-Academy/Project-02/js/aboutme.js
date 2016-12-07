@@ -1,6 +1,9 @@
 $(function() { // wait for document ready
+    var width = $(window).width();
+    //Check the window height
+    height = $(window).height();
     //Detect if it is a phone
-    if (screen && screen.width > 599) {
+
         // Init
         var controller = new ScrollMagic.Controller();
 
@@ -21,5 +24,4 @@ $(function() { // wait for document ready
             .setPin(".aboutme")
             .addIndicators() // add indicators (requires plugin)
             .addTo(controller);
-    }
 });

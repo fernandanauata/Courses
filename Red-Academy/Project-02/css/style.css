@@ -27,6 +27,7 @@ font-face {
 /*MAIN CSS SET UP*/
 body {
     font-family: 'Gotham', Arial, sans-serif;
+    overflow-x: hidden;
 }
 
 h1 {
@@ -186,6 +187,7 @@ menu {
     animation-duration: 500s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
+    width: 100vw;
 }
 
 .aboutme-right {
