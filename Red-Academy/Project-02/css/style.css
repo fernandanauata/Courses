@@ -152,6 +152,7 @@ menu {
 .aboutme {
     width: 100vw;
     height: 100vh;
+    display: none;
 }
 
 .aboutme-left {
@@ -160,7 +161,8 @@ menu {
     display: inline-block;
 }
 
-.aboutme-left-back {
+.aboutme-left-back,
+.aboutme-mobile-back {
     background: url("../img/about-me-pattern.png") repeat #F9FAFB;
     position: fixed;
     top: 0;
@@ -429,6 +431,13 @@ footer {
     }
     .aboutme {
         display: block;
+    }
+    .aboutme-mobile {
+      height: 0;
+    }
+    .aboutme-mobile .aboutme-left,
+    .aboutme-mobile .aboutme-right {
+      display: none;
     }
     .aboutme-left {
         width: 50%;

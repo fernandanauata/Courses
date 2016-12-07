@@ -11,6 +11,6 @@ $(function () { // wait for document ready
     var scene = new ScrollMagic.Scene({triggerElement: ".aboutme", duration: 2000, triggerHook: "onLeave"})
             .setTween(tween)
             .setPin(".aboutme")
-            // .addIndicators() // add indicators (requires plugin)
+            .addIndicators() // add indicators (requires plugin)
             .addTo(controller);
   });
