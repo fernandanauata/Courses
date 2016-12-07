@@ -272,8 +272,7 @@ figcaption {
 }
 
 #slideContainer {
-    width: 400vw;
-    /* to contain 4 panels, each with 100% of window width */
+    width: 100vw;
     height: 100vh;
     position: relative;
 }
@@ -287,9 +286,7 @@ figcaption {
 
 .panel {
     height: 100%;
-    width: 25%;
-    /* relative to parent -> 25% of 400% = 100% of window width */
-    float: left;
+    width: 100vw;
 }
 
 .overlap-text {
@@ -471,6 +468,16 @@ footer {
         overflow: hidden;
         -webkit-perspective: 1000;
         perspective: 1000;
+    }
+    #slideContainer{
+      /* to contain 4 panels, each with 100% of window width */
+      width: 400vw;
+    }
+    .panel {
+        height: 100%;
+        width: 25%;
+        /* relative to parent -> 25% of 400% = 100% of window width */
+        float: left;
     }
     .socialmedia a:not(:last-child) {
         padding-right: 20%;
