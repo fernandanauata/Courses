@@ -263,6 +263,10 @@ figcaption {
 
 
 /*CSS FOR THE SLIDE PORTFOLIO SECTION*/
+.portfolio {
+  background-color: #fff; 
+}
+
 #pinContainer {
     width: 100vw;
     overflow: hidden;
