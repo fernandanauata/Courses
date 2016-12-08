@@ -24,7 +24,9 @@ font-face {
     font-style: normal;
 }
 
+
 /*MAIN CSS SET UP*/
+
 body {
     font-family: 'Gotham', Arial, sans-serif;
     overflow-x: hidden;
@@ -40,15 +42,21 @@ h1 {
     font-weight: bold;
 }
 
+h2 {
+    text-align: center;
+}
+
 .img-responsive {
     width: 100%;
 }
 
 section {
-  width: 100vw;
+    width: 100vw;
 }
 
+
 /*CSS ANIMATION*/
+
 @-webkit-keyframes backgroundAnimate {
     from {
         left: 0;
@@ -73,6 +81,7 @@ section {
 
 
 /*CSS FOR THE HEADER SECTION*/
+
 header {
     background: url("../img/header-img/fernanda-nauata-phone-horizontal-header-img.jpg") #343434;
     background-size: cover;
@@ -102,6 +111,11 @@ menu {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+}
+
+.fa-lg {
+    font-size: 2em;
+    line-height: 1;
 }
 
 .sidebar-menu {
@@ -151,9 +165,10 @@ menu {
 
 
 /*CSS FOR THE ABOUT ME SECTION*/
+
 .aboutme-mobile-lef {
-  width: 100vw;
-  height: 100vh;
+    width: 100vw;
+    height: 100vh;
 }
 
 .aboutme {
@@ -168,8 +183,7 @@ menu {
     display: inline-block;
 }
 
-.aboutme-left-back,
-.aboutme-mobile-back {
+.aboutme-left-back, .aboutme-mobile-back {
     background: url("../img/about-me-pattern.png") repeat #F9FAFB;
     position: fixed;
     top: 0;
@@ -193,7 +207,7 @@ menu {
     animation-duration: 500s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
-  }
+}
 
 .aboutme-right {
     background-color: #ECEFF1;
@@ -263,8 +277,9 @@ figcaption {
 
 
 /*CSS FOR THE SLIDE PORTFOLIO SECTION*/
+
 .portfolio {
-  background-color: #fff; 
+    background-color: #fff;
 }
 
 #pinContainer {
@@ -294,30 +309,30 @@ figcaption {
 }
 
 .overlap-text {
-  position: absolute;
-  width: 100vw;
+    position: absolute;
+    width: 100vw;
 }
 
 .overlap-text h1 {
-  padding-bottom: 0;
+    padding-bottom: 0;
 }
 
 .overlap-text p {
-  width: 80vw;
-  display: block;
-  margin: 0 auto;
-  text-align: center;
+    width: 80vw;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .portfoliobutton-container {
-  width: 100vw;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  margin-top: 1%;
+    width: 100vw;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin-top: 1%;
 }
 
 .portfoliobutton {
@@ -326,13 +341,16 @@ figcaption {
     border-radius: 3px;
     color: #333333;
 }
+
 .portfoliobutton:hover {
     border: solid #9A3A4C 2px;
     color: #9A3A4C;
     text-decoration: none;
 }
 
+
 /*CSS FOR THE SLIDE SECOND PORTFOLIO SECTION*/
+
 .secondportfolio {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -348,7 +366,7 @@ figcaption {
 }
 
 .secondportfolio h2 {
-  text-align: center;
+    text-align: center;
 }
 
 .carousel {
@@ -368,10 +386,12 @@ figcaption {
 }
 
 .slick-prev:before, .slick-next:before, .slick-prev:hover:before, .slick-prev:focus:before, .slick-next:hover:before, .slick-next:focus:before {
-  display: hidden;
+    display: hidden;
 }
 
+
 /*CSS FOR THE CONTACT SECTION*/
+
 .contact {
     padding-bottom: 20px;
     background-color: #E5E5E7;
@@ -389,21 +409,23 @@ figcaption {
     -ms-flex-pack: center;
     justify-content: center;
 }
+
 .contact p {
-  width: 90%;
-  text-align: center;
+    width: 90%;
+    text-align: center;
 }
+
 .message {
-  width: 342px;
+    width: 342px;
 }
 
 form button {
-  display: block;
-  margin: 0 auto;
-  border: solid #a0a0a0 2px;
-  padding: 2%;
-  border-radius: 3px;
-  background-color: #E5E5E7;
+    display: block;
+    margin: 0 auto;
+    border: solid #a0a0a0 2px;
+    padding: 2%;
+    border-radius: 3px;
+    background-color: #E5E5E7;
 }
 
 form button:hover {
@@ -429,7 +451,9 @@ form button:hover {
     color: #9A3A4C;
 }
 
+
 /*CSS FOR THE FOOTER SECTION*/
+
 footer {
     background-color: #343434;
     color: #E5E5E7;
@@ -437,7 +461,9 @@ footer {
     text-align: center;
 }
 
+
 /*MEDIA QUERIES*/
+
 @media screen and (min-width: 600px) {
     header {
         background: url("../img/header-img/fernanda-nauata-tablet-horizontal-header-img.jpg") #343434;
@@ -446,11 +472,10 @@ footer {
         display: block;
     }
     .aboutme-mobile {
-      height: 0;
+        height: 0;
     }
-    .aboutme-mobile .aboutme-mobile-left,
-    .aboutme-mobile .aboutme-mobile-right {
-      display: none;
+    .aboutme-mobile .aboutme-mobile-left, .aboutme-mobile .aboutme-mobile-right {
+        display: none;
     }
     .aboutme-left {
         width: 50%;
@@ -464,7 +489,7 @@ footer {
         display: block;
     }
     .aboutme-right-container {
-      display: flex;
+        display: flex;
     }
     #pinContainer {
         width: 100vw;
@@ -473,9 +498,9 @@ footer {
         -webkit-perspective: 1000;
         perspective: 1000;
     }
-    #slideContainer{
-      /* to contain 4 panels, each with 100% of window width */
-      width: 400vw;
+    #slideContainer {
+        /* to contain 4 panels, each with 100% of window width */
+        width: 400vw;
     }
     .panel {
         height: 100%;
@@ -487,10 +512,9 @@ footer {
         padding-right: 20%;
     }
     .portfoliobutton-container {
-      margin-top: 0;
+        margin-top: 0;
     }
-    .resumebutton,
-    .portfoliobutton {
+    .resumebutton, .portfoliobutton {
         padding: 0.5% 0.5% 0.5% 0.5%;
     }
     .carousel {
@@ -509,7 +533,7 @@ footer {
         max-width: 1140px;
     }
     .overlap-text p {
-      width: 40vw;
+        width: 40vw;
     }
     .aboutme {
         height: 100vh;
@@ -524,8 +548,7 @@ footer {
     header {
         background: url("../img/header-img/fernanda-nauata-xlarge-header-img.jpg") no-repeat center center fixed #343434;
     }
-
     .portfoliobutton-container {
-      margin-top: 1%;
+        margin-top: 1%;
     }
 }
