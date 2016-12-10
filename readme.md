@@ -10,4 +10,4 @@ Contact me!
 
 If you have an exciting project, maybe a spot on your company for a committed professional you are very welcome to contact me.
 
-Please send me an [email](ferhcard@gmail.com) 
+Please send me an email **ferhcard@gmail.com**
