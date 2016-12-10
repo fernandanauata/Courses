@@ -10,16 +10,25 @@ function initMap() {
         zoom: 13,
         mapTypeControl: false
     });
-    data = {
-      grant_type: "client_credentials",
-      client_id: "b9Zej3614xnjJxr01JQFrQ",
-      client_secret: "y7cxvKytUivAv2ZhwJkEZ476bwyf7kYNwqFGvSnvws7iv93bRBnu4uJKyxBpusGr"
-    }
-    var $post = $.ajax({
-        type: "POST",
-        url: "https://api.yelp.com/oauth2/token",
-        data: data
-    });
 
-    console.log($post);
+    var success = function(response){
+      console.log(response);
+    }
+
+    const $post = $.ajax({
+      type: "POST",
+      url: "http://api.openweathermap.org/data/2.5/weather?q=vancouver,ca&units=metric&id=524901&APPID=3fe2fae0071d0cbe47021bf06fb9a1af",
+      data: null,
+      success: success,
+      dataType: "json"
+    }).done(function(data) {
+      let currWeather = data.main.temp;
+      $(".title").text(`The temperature is ${currWeather} °C`);
+   });;
+
+
+
+
+
+
 }
