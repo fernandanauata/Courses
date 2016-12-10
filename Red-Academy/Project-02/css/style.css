@@ -94,16 +94,31 @@ header {
     height: 100vh;
 }
 
-.mobilemenu {
+.mobile-icons {
     padding: 0;
     margin: 0;
     padding: 3%;
     position: fixed;
     z-index: 1000;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
+.chevron-down {
+  display: flex;
+  justify-content: center;
+}
+
+.fa-chevron-down {
+  color: #71FFFA;
+  margin-top: 85vh;
+}
+
+
 .mobilemenu-zindex {
-    color: white;
+    color: #71FFFA;
     z-index: 1500;
 }
 

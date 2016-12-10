@@ -11,20 +11,30 @@ function initMap() {
         mapTypeControl: false
     });
 
-    var success = function(response){
-      console.log(response);
+    var success = function(response) {
+        console.log(response);
     }
 
     const $post = $.ajax({
-      type: "POST",
-      url: "http://api.openweathermap.org/data/2.5/weather?q=vancouver,ca&units=metric&id=524901&APPID=3fe2fae0071d0cbe47021bf06fb9a1af",
-      data: null,
-      success: success,
-      dataType: "json"
+        type: "POST",
+        url: "http://api.openweathermap.org/data/2.5/weather?q=vancouver,ca&units=metric&id=524901&APPID=3fe2fae0071d0cbe47021bf06fb9a1af",
+        data: null,
+        success: success,
+        dataType: "json"
     }).done(function(data) {
-      let currWeather = data.main.temp;
-      $(".title").text(`The temperature is ${currWeather} °C`);
-   });;
+        let currWeather = data.main.temp;
+        $(".title").text(`The temperature is ${currWeather} °C`);
+    });;
+
+    const $station = $.ajax({
+        type: "POST",
+        url: "ftp://webftp.vancouver.ca/OpenData/json/electric_vehicle_charging_stations.json",
+        data: null,
+        success: success,
+        dataType: "json"
+    }).done(function(data) {
+        console.log(data)
+    });;
 
 
 

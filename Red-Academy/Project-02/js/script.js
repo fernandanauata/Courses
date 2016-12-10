@@ -1,8 +1,8 @@
 $(function() {
     //Check the window width
     var width = $(window).width();
-        //Check the window height
-        height = $(window).height();
+    //Check the window height
+    height = $(window).height();
 
     // Initalize sidebar
     var sidebar = $(".sidebar-menu").sidebar({
@@ -15,7 +15,7 @@ $(function() {
 
     //Smal Portfolio Carousel
     $('.carousel').slick({
-      arrows: false,
+        arrows: false,
         autoplay: true,
         centerMode: true,
         centerPadding: '60px',
@@ -37,5 +37,14 @@ $(function() {
                 slidesToShow: 1
             }
         }]
+    });
+
+    $(window).scroll(function() {
+        if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+          $(".chevron-down").css("display", "none");
+        }
+        else {
+          $(".chevron-down").css("display", "flex");
+        }
     });
 });
