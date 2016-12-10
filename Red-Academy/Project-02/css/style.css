@@ -33,16 +33,16 @@ body {
 }
 
 h1, h2, a {
-  text-align: center;
+    text-align: center;
 }
 
 h1, h2, p, a {
-  color: #333333;
+    color: #333333;
 }
 
 a {
-  cursor: pointer;
-  text-decoration: none;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 h1 {
@@ -68,11 +68,14 @@ section {
     border-radius: 3px;
     color: #333333;
     margin-top: 2px;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .my-button:hover {
-    border: solid #9A3A4C 2px;
-    color: #9A3A4C;
+    border: solid #71FFFA 2px;
+    color: #71FFFA;
+    cursor: pointer;
     text-decoration: none;
 }
 
@@ -105,7 +108,7 @@ section {
 /*CSS FOR THE HEADER SECTION*/
 
 header {
-    background: url("../img/header-img/fernanda-nauata-phone-horizontal-header-img.jpg") #343434;
+    background: url("../img/header-img/fernanda-nauata-phone-horizontal-header-img.jpg") #0A0B0D;
     background-size: cover;
     width: 100vw;
     height: 100vh;
@@ -122,22 +125,29 @@ header {
     padding: 3%;
     position: fixed;
     z-index: 1000;
-    width: 100vw;
-    height: 100vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
 }
 
 .chevron-down {
-  display: flex;
-  justify-content: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
 }
 
 .fa-chevron-down {
-  color: #71FFFA;
-  margin-top: 85vh;
+    color: #71FFFA;
+    margin-top: 85vh;
+    margin-left: 46.5vw;
 }
-
 
 .mobilemenu-zindex {
     color: #71FFFA;
@@ -371,6 +381,7 @@ figcaption {
     justify-content: center;
 }
 
+
 /*CSS FOR THE SLIDE SECOND PORTFOLIO SECTION*/
 
 .secondportfolio {
@@ -488,7 +499,7 @@ footer {
 
 @media screen and (min-width: 600px) {
     header {
-        background: url("../img/header-img/fernanda-nauata-tablet-horizontal-header-img.jpg") #343434;
+        background: url("../img/header-img/fernanda-nauata-tablet-horizontal-header-img.jpg") #0A0B0D;
     }
     .aboutme {
         display: block;
@@ -511,6 +522,8 @@ footer {
         display: block;
     }
     .aboutme-right-container {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
     }
     #pinContainer {
@@ -546,7 +559,7 @@ footer {
 
 @media screen and (min-width: 1140px) {
     header {
-        background: url("../img/header-img/fernanda-nauata-large-header-img.jpg") no-repeat center center fixed #343434;
+        background: url("../img/header-img/fernanda-nauata-large-header-img.jpg") no-repeat center center fixed #0A0B0D;
     }
     .sidebar-menu {
         width: 20%;
@@ -568,6 +581,6 @@ footer {
 
 @media screen and (min-width: 2040px) {
     header {
-        background: url("../img/header-img/fernanda-nauata-xlarge-header-img.jpg") no-repeat center center fixed #343434;
+        background: url("../img/header-img/fernanda-nauata-xlarge-header-img.jpg") no-repeat center center fixed #0A0B0D;
     }
 }
