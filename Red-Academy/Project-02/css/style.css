@@ -379,6 +379,7 @@ figcaption {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
+    margin-top: 20px;
 }
 
 
@@ -541,9 +542,7 @@ footer {
     .socialmedia a:not(:last-child) {
         padding-right: 20%;
     }
-    .portfoliobutton-container {
-        margin-top: 0;
-    }
+
     .resumebutton, .portfoliobutton {
         padding: 0.5% 0.5% 0.5% 0.5%;
     }
