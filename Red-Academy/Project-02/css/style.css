@@ -474,7 +474,8 @@ form button {
     justify-content: space-around;
 }
 
-.socialmedia a:hover {
+.socialmedia a:hover,
+.contact a:hover {
     color: #71FFFA ;
 }
 
