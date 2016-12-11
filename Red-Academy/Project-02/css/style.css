@@ -78,10 +78,6 @@ section {
     cursor: pointer;
     text-decoration: none;
 }
-.my-button:visited {
-    text-decoration: none;
-}
-
 
 /*CSS ANIMATION*/
 
@@ -125,7 +121,8 @@ header {
 .mobile-icons {
     padding: 0;
     margin: 0;
-    padding: 3%;
+    padding-left: 3%;
+    padding-top: 3%;
     position: fixed;
     z-index: 1000;
     display: -webkit-box;
@@ -464,12 +461,6 @@ form button {
     background-color: #E5E5E7;
 }
 
-form button:hover {
-    border: solid #9A3A4C 2px;
-    color: #9A3A4C;
-    text-decoration: none;
-}
-
 .socialmedia a {
     color: #343434;
     padding-right: 10%;
@@ -484,7 +475,7 @@ form button:hover {
 }
 
 .socialmedia a:hover {
-    color: #9A3A4C;
+    color: #71FFFA ;
 }
 
 
