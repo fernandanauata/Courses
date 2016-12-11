@@ -78,6 +78,9 @@ section {
     cursor: pointer;
     text-decoration: none;
 }
+.my-button:visited {
+    text-decoration: none;
+}
 
 
 /*CSS ANIMATION*/
