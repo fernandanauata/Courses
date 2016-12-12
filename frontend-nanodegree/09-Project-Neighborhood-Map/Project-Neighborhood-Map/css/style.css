@@ -36,7 +36,7 @@ p {
     left: -180px;
     bottom: 0;
     width: 45%;
-    background: #F1F2F3;
+    background-color: white;
     position: fixed;
     z-index: 2;
     display: -webkit-box;
@@ -68,7 +68,6 @@ p {
     }
 
     h2 {
-        color: #525454;
         font-size: 200%;
     }
 

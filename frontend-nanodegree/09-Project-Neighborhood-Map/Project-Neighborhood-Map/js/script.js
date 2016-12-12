@@ -1,4 +1,5 @@
 var map;
+var image = 'https://neighborhoodmapproject.herokuapp.com/bus-icon.png';
 
 function initMap() {
     // Constructor creates a new map - only center and zoom are required.
@@ -41,23 +42,35 @@ function initMap() {
         })
         .done(function(data) {
             data.forEach(function(item) {
-              console.log(item);
-              var marker = new google.maps.Marker({
-                  map: map,
-                  animation: google.maps.Animation.DROP,
-                  position: {lat: parseFloat(item.Latitude), lng: parseFloat(item.Longitude)},
-                  title: item.Name
-              });
-              // marker.setMap(map);
+                console.log(item);
+
+                let stopName = item.Name;
+                let stopPosition = item.OnStreet;
+                let stopRoutes = item.Routes;
+
+                var infoWindowContent = `<div> <h5>${stopName}</h5> <p>At ${stopPosition}</p>  <p>Routes: ${stopRoutes}</p> </div>`;
+
+                var infoWindow = new google.maps.InfoWindow({
+                    content: infoWindowContent
+                });
+
+                var marker = new google.maps.Marker({
+                    map: map,
+                    icon: image,
+                    animation: google.maps.Animation.DROP,
+                    position: {
+                        lat: parseFloat(item.Latitude),
+                        lng: parseFloat(item.Longitude)
+                    },
+                    title: item.Name
+                });
+                marker.addListener('click', function() {
+                    infoWindow.open(map, marker);
+                });
+
             });
-            // var myLatlng = new google.maps.LatLng(latitude,longitude);
-            //
-            // var marker = new google.maps.Marker({
-            //     position: myLatlng,
-            //     title: "Hello World!"
-            // });
         })
-        .fail(function( ) {
+        .fail(function() {
             alert("error");
         });
 }
