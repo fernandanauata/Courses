@@ -15,6 +15,7 @@ function initMap() {
         console.log(response);
     }
 
+    // Open Weather Map Ajax request
     const $post = $.ajax({
         type: "POST",
         url: "http://api.openweathermap.org/data/2.5/weather?q=vancouver,ca&units=metric&id=524901&APPID=3fe2fae0071d0cbe47021bf06fb9a1af",
@@ -24,21 +25,21 @@ function initMap() {
     }).done(function(data) {
         let currWeather = data.main.temp;
         $(".title").text(`The temperature is ${currWeather} °C`);
-    });;
+    });
 
-    const $station = $.ajax({
-        type: "POST",
-        url: "ftp://webftp.vancouver.ca/OpenData/json/electric_vehicle_charging_stations.json",
-        data: null,
-        success: success,
-        dataType: "json"
-    }).done(function(data) {
-        console.log(data)
-    });;
+    // Translink API AJAX request
+    var vancouverStops = "http://api.translink.ca/rttiapi/v1/stops?apikey=vNfnYzGu4xBgTX6TCRPy&lat=49.2827&long=-123.1207&?callback=?";
 
-
-
-
-
-
-}
+    $.ajax({
+            type: "GET",
+            url: vancouverStops,
+            beforeSend: function(xhr){xhr.setRequestHeader('accept', 'application/json');},
+            success: function() { alert('Success!'); }
+            })
+        .done(function(data) {
+            console.log(data);
+        })
+        .fail(function() {
+            alert("error");
+        });
+    }

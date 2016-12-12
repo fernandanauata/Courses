@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <script src="https://use.fontawesome.com/207598e8b2.js"></script>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css" type="text/css">
 
@@ -15,27 +17,42 @@
 
 <body>
 
-    <div class="side-menu">
-        <div class="options-box .col-xs-6 .col-sm-6 .col-md-4 .col-lg-3">
-            <h1 class="title">Sushi Places in Vancouver!</h1>
-            <h1 class="title2">Sushi Places in Vancouver!</h1>
-            <div>
-                <input id="onedolarsign" type="button" value="$">
-                <input id="twodolarsign" type="button" value="$$">
-                <input id="threedolarsign" type="button" value="$$$">
-                <input id="fourdolarsign" type="button" value="$$$$">
+    <div class="container-menu">
+        <i class="menubutton fa fa-bars" aria-hidden="true"></i>
+
+        <div class="side-menu">
+            <div class="side-menu-content">
+                <h2>Where to charge electric vehicles in Vancouver</h2>
+                <p>
+                  Find your way to the closest electric vehicle charging stations in Vancouver
+                </p>
+
+                <ul>
+
+                </ul>
             </div>
         </div>
     </div>
-    <div id="map"></div>
+
+    <div id="map">
+
     </div>
 
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
+    <!-- Side bar plugin -->
+    <script src="js/plugins/jquery.sidebar.min.js"></script>
+
+    <!-- Custom Javascript -->
+    <script src="js/toggle-menu.js"></script>
     <script async defer src="js/script.js"></script>
 
+
+    <!-- Google Map API -->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEDV77d_uZabxz5tFauuaLflbk8LSsB4A&v=3&callback=initMap">
     </script>
+
 
 </body>
 
