@@ -2,12 +2,12 @@ var map;
 
 function initMap() {
     // Constructor creates a new map - only center and zoom are required.
-    map = new google.maps.Map(document.getElementById('map'), {
+    var map = new google.maps.Map(document.getElementById('map'), {
         center: {
             lat: 49.2827,
             lng: -123.1207
         },
-        zoom: 13,
+        zoom: 17,
         mapTypeControl: false
     });
 
@@ -28,18 +28,36 @@ function initMap() {
     });
 
     // Translink API AJAX request
-    var vancouverStops = "http://api.translink.ca/rttiapi/v1/stops?apikey=vNfnYzGu4xBgTX6TCRPy&lat=49.2827&long=-123.1207&?callback=?";
+    var vancouverStops = "https://neighborhoodmapproject.herokuapp.com/test.php";
 
     $.ajax({
-            type: "GET",
+            type: "POST",
             url: vancouverStops,
-            beforeSend: function(xhr){xhr.setRequestHeader('accept', 'application/json');},
-            success: function() { alert('Success!'); }
-            })
-        .done(function(data) {
-            console.log(data);
+            data: {
+                latitude: 49.2827,
+                longitude: -123.1207
+            },
+            dataType: "json"
         })
-        .fail(function() {
+        .done(function(data) {
+            data.forEach(function(item) {
+              console.log(item);
+              var marker = new google.maps.Marker({
+                  map: map,
+                  animation: google.maps.Animation.DROP,
+                  position: {lat: parseFloat(item.Latitude), lng: parseFloat(item.Longitude)},
+                  title: item.Name
+              });
+              // marker.setMap(map);
+            });
+            // var myLatlng = new google.maps.LatLng(latitude,longitude);
+            //
+            // var marker = new google.maps.Marker({
+            //     position: myLatlng,
+            //     title: "Hello World!"
+            // });
+        })
+        .fail(function( ) {
             alert("error");
         });
-    }
+}
