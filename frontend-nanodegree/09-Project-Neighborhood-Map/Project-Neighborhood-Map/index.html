@@ -21,13 +21,15 @@
 
         <div class="side-menu">
             <div class="side-menu-content">
-                <h2>Find the closest bus stop in Downtown Vancouver</h2>
+                <h2>Bus stops in Downtown Vancouver</h2>
                 <p>
-                    Find your way to the closest electric vehicle charging stations in Vancouver
+                    Check the bus stops in Downtown Vancouver clicking the button
                 </p>
 
-                <ul>
-
+                <button data-bind="click: addBusStops">Click here</button>
+                <ul data-bind="foreach: translinkNameAux">
+                    <li data-bind="text: $data">
+                    </li>
                 </ul>
             </div>
         </div>
@@ -43,9 +45,13 @@
     <!-- Side bar plugin -->
     <script src="js/plugins/jquery.sidebar.min.js"></script>
 
+    <!-- Knockout -->
+    <script src="js/libs/knockout-3.2.0.js"></script>
+
     <!-- Custom Javascript -->
     <script src="js/toggle-menu.js"></script>
-    <script async defer src="js/script.js"></script>
+    <script async defer src="js/viewModel.js"></script>
+    <script async defer src="js/map.js"></script>
 
     <!-- Google Map API -->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEDV77d_uZabxz5tFauuaLflbk8LSsB4A&v=3&callback=initMap"> </script>
