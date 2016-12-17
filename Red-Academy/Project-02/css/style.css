@@ -572,10 +572,16 @@ footer {
     .aboutme-container picture {
         width: 40%;
     }
+    .socialmedia a:not(:last-child) {
+        padding-right: 20%;
+    }
 }
 
 @media screen and (min-width: 2040px) {
     header {
         background: url("../img/header-img/fernanda-nauata-xlarge-header-img.jpg") no-repeat center center fixed #0A0B0D;
+    }
+    .socialmedia a:not(:last-child) {
+        padding-right: 20%;
     }
 }
