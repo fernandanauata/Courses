@@ -1,4 +1,3 @@
-var map;
 var image = 'https://neighborhoodmapproject.herokuapp.com/bus-icon.png';
 
 function initMap() {

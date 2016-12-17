@@ -1,5 +1,4 @@
-html,
-body {
+html, body {
     font-family: Arial, sans-serif;
     height: 100%;
     margin: 0;
@@ -12,22 +11,44 @@ h2 {
 }
 
 p {
-  font-size: 150%;
+    font-size: 150%;
+}
+
+.container-weather {
+    float: right;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.5%;
+    text-align: center;
+    font-size: smaller;
+}
+
+.weather-box {
+    position: fixed;
+    color: #525454;
+    background-color: rgba(255, 255, 255, 0.9);;
+    padding: 0.5em;
+}
+
+.wweather-check {
+    margin: 0;
 }
 
 .container-menu {
-  position: relative;
-  z-index: 1;
-  padding-top: 1em;
-  padding-left: 1em;
+    position: relative;
+    z-index: 1;
+    padding-top: 1em;
+    padding-left: 1em;
 }
 
 .menubutton {
-  position: fixed;
-  font-size: 2.5em;
-  z-index: 3;
-  cursor: pointer;
-  color: #525454;
+    position: fixed;
+    font-size: 2.5em;
+    z-index: 3;
+    cursor: pointer;
+    color: #525454;
 }
 
 .side-menu {
@@ -49,8 +70,8 @@ p {
 }
 
 .side-menu-content {
-  margin: 5%;
-  margin-top: 10%;
+    margin: 5%;
+    margin-top: 10%;
 }
 
 #map {
@@ -60,28 +81,32 @@ p {
     position: absolute;
 }
 
+
 /*MEDIA QUERIES*/
 
 @media screen and (min-width: 600px) {
     .side-menu {
-      width: 40%;
+        width: 40%;
     }
-
     h2 {
         font-size: 200%;
     }
-
     p {
-      font-size: 100%;
+        font-size: 100%;
+    }
+    .container-weather {
+      float: none;
+      font-size: initial;
+    }
+    .weather-check {
+      margin: 0;
     }
 }
 
 @media screen and (min-width: 1140px) {
-  .side-menu {
-    width: 20%;
-  }
+    .side-menu {
+        width: 20%;
+    }
 }
 
-@media screen and (min-width: 2040px) {
-
-}
+@media screen and (min-width: 2040px) {}

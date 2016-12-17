@@ -12,17 +12,25 @@
     <!-- Font Awesome -->
     <script src="https://use.fontawesome.com/207598e8b2.js"></script>
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css">
 
     <title>Project: Neighborhood Map</title>
 </head>
 
 <body>
 
-    <div class="container-menu">
+    <div class="container-weather">
+        <article class="weather-box">
+            <p class="weather-check">
+                Check the weather before leaving
+            </p>
+        </article>
+    </div>
+
+    <aside class="container-menu">
         <i class="menubutton fa fa-bars" aria-hidden="true"></i>
 
-        <div class="side-menu">
+        <article class="side-menu">
             <div class="side-menu-content">
                 <h2>Bus stops in Downtown Vancouver</h2>
                 <p>
@@ -35,8 +43,8 @@
                     </li>
                 </ul>
             </div>
-        </div>
-    </div>
+        </article>
+    </aside>
 
     <div id="map">
 
@@ -53,8 +61,8 @@
 
     <!-- Custom Javascript -->
     <script src="js/toggle-menu.js"></script>
-    <script async defer src="js/viewModel.js"></script>
-    <script async defer src="js/map.js"></script>
+    <script src="js/viewModel.js"></script>
+    <script src="js/map.js"></script>
 
     <!-- Google Map API -->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEDV77d_uZabxz5tFauuaLflbk8LSsB4A&v=3&callback=initMap">
