@@ -1,6 +1,8 @@
 function ViewModel() {
     var self = this;
 
+
+
     //Initialize data
     self.translinkData = ko.observableArray();
     self.translinkName = ko.observableArray();
@@ -26,9 +28,6 @@ function ViewModel() {
                 dataType: "json",
                 success: function(content, textStatus, jqXHR) {
                     self.translinkData(content);
-
-                    console.log(content);
-
                     //Get the stop names and add it on the `translinkName`
                     var stopNames = [];
                     content.forEach(function(item) {
@@ -57,10 +56,17 @@ function ViewModel() {
                             title: item.Name
                         });
                         marker.addListener('click', function() {
+                            marker.setAnimation(google.maps.Animation.BOUNCE);
+                            window.setTimeout(
+                                function() {
+                                    marker.setAnimation(null);
+                                },
+                                2000
+                            );
                             infoWindow.setContent(infoWindowContent);
                             infoWindow.open(map, marker);
                         });
-                    self.markers.push(marker);
+                        self.markers.push(marker);
                     });
                 }
             })
@@ -100,29 +106,37 @@ function ViewModel() {
                 alert("error");
             });
     };
+    self.menuVisible = ko.observable(false);
+    // Initalize sidebar
+    var sidebar = $(".side-menu").sidebar({
+        side: "left"
+    });
+    // Toggle sidebar
+    self.toggleMenu = function(){
+      sidebar.trigger("sidebar:toggle");
+      return true
+    }
 
+    // Uncheck the checkbox
     self.checkValue = ko.observable(false);
 
     self.filterMarkers = function() {
 
-      if (ko.toJSON(self.checkValue) === "true") {
-          self.markers.forEach(function(marker){
-            // Check if the bus stop is accessible
-            if (marker.category > 0) {
-              marker.setVisible(true);
-            }
-            else {
-              marker.setVisible(false);
-            }
-          });
-      }
-      else {
-        // If the check box is not check all bus stops markers are shown
-        self.markers.forEach(function(marker){
-          marker.setVisible(true);
-        });
-      }
-      return true;
+        if (ko.toJSON(self.checkValue) === "true") {
+            self.markers.forEach(function(marker) {
+                // Check if the bus stop is accessible
+                if (marker.category > 0) {
+                    marker.setVisible(true);
+                } else {
+                    marker.setVisible(false);
+                }
+            });
+        } else {
+            // If the check box is not check all bus stops markers are shown
+            self.markers.forEach(function(marker) {
+                marker.setVisible(true);
+            });
+        }
+        return true;
     }
-
 }
