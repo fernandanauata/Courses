@@ -38,15 +38,9 @@
                 </p>
 
                 <form action="">
-                    <input type="checkbox" name="vehicle" value="Bike"> Wheelchair Accessible<br>
-                    <input type="checkbox" name="vehicle" value="Car"> More than one route
+                    <input type="checkbox" name="vehicle" value="Accessible"> Wheelchair Accessible<br>
+                    <input type="checkbox" name="vehicle" value="Route"> More than one route
                 </form>
-
-                <!-- <button data-bind="click: addBusStops">Click here</button>
-                <ul data-bind="foreach: translinkNameAux">
-                    <li data-bind="text: $data">
-                    </li>
-                </ul> -->
             </div>
         </article>
     </aside>
@@ -70,8 +64,7 @@
     <script src="js/map.js"></script>
 
     <!-- Google Map API -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEDV77d_uZabxz5tFauuaLflbk8LSsB4A&v=3&callback=initMap">
-    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEDV77d_uZabxz5tFauuaLflbk8LSsB4A&v=3&callback=initMap" async defer onerror="mapError()"></script>
 
 </body>
 

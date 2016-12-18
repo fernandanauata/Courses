@@ -63,7 +63,7 @@ function ViewModel() {
             })
             .fail(function() {
                 alert("error");
-            })
+            });
     };
 
     //Define functions to get weather data
@@ -81,17 +81,18 @@ function ViewModel() {
 
                 //Gets the current weather
                 var currWeather = content.main.temp;
-                var snowMan = '<i class="fa fa-snowflake-o" aria-hidden="true"></i>';
-
                 //Check the current weather and deliver a different message
                 if (currWeather < 0) {
-                  $(".weather-check").text(`The Weather right now is ${currWeather}°C. Stay warm!`)
+                  $(".weather-check").text(`The Weather right now is ${currWeather}°C. Stay warm!`);
                 } if (currWeather < -10) {
-                  $(".weather-check").text(`The Weather right now is ${currWeather}°C. It's freazing!`)
+                  $(".weather-check").text(`The Weather right now is ${currWeather}°C. It's freazing!`);
                 } if (currWeather > 0) {
-                  $(".weather-check").text(`The Weather right now is ${currWeather}°C. Enjoy your day!`)
-                };
+                  $(".weather-check").text(`The Weather right now is ${currWeather}°C. Enjoy your day!`);
+                }
             }
+        })
+        .fail(function() {
+            alert("error");
         });
     };
 
