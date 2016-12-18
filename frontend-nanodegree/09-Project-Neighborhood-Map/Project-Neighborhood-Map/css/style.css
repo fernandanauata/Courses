@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     font-family: Arial, sans-serif;
     height: 100%;
     margin: 0;
@@ -8,12 +9,14 @@ html, body {
 h2 {
   margin-top: 40px;
 }
-h2, p, li, form {
+h2,
+p,
+li,
+form {
     color: #525454;
 }
 
 select {
-  height: 85vw;
   width: 100%;
 }
 
@@ -111,5 +114,3 @@ select {
         width: 20%;
     }
 }
-
-@media screen and (min-width: 2040px) {}

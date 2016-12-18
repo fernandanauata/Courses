@@ -11,14 +11,6 @@ function initMap() {
         mapTypeControl: false
     });
 
-    /**
-     * Error callback for GMap API request
-     */
-    mapError = function() {
-      alert("error");
-    };
-
-
     //Instanciate viewModel object
     var viewModel = new ViewModel(map);
 
@@ -29,3 +21,9 @@ function initMap() {
     viewModel.getTranslinkData();
     viewModel.getWeatherData();
 }
+/**
+ * Error callback for GMap API request
+ */
+mapError = function() {
+  alert("error");
+};
