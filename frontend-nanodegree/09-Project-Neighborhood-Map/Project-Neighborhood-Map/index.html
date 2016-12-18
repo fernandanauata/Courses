@@ -34,14 +34,19 @@
             <div class="side-menu-content">
                 <h2>Bus stops in Downtown Vancouver</h2>
                 <p>
-                    Check the bus stops in Downtown Vancouver clicking the button
+                    Click on the checkboxes to refine the markers
                 </p>
 
-                <button data-bind="click: addBusStops">Click here</button>
+                <form action="">
+                    <input type="checkbox" name="vehicle" value="Bike"> Wheelchair Accessible<br>
+                    <input type="checkbox" name="vehicle" value="Car"> More than one route
+                </form>
+
+                <!-- <button data-bind="click: addBusStops">Click here</button>
                 <ul data-bind="foreach: translinkNameAux">
                     <li data-bind="text: $data">
                     </li>
-                </ul>
+                </ul> -->
             </div>
         </article>
     </aside>

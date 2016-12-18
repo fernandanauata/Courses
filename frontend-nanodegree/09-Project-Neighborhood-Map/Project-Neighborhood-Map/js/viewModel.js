@@ -23,6 +23,8 @@ function ViewModel() {
                 success: function(content, textStatus, jqXHR) {
                     self.translinkData(content);
 
+                    console.log(content);
+
                     //Get the stop names and add it on the `translinkName`
                     var stopNames = [];
                     content.forEach(function(item) {
