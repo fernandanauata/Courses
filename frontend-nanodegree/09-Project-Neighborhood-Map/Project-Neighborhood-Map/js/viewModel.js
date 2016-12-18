@@ -1,3 +1,5 @@
+// var infoWindow = new google.maps.InfoWindow();
+
 function ViewModel() {
     var self = this;
 
@@ -6,6 +8,9 @@ function ViewModel() {
     self.translinkName = ko.observableArray();
     self.weatherData = ko.observableArray();
     self.translinkNameAux = ko.observableArray();
+
+    // Initialize infoWindow
+    var infoWindow = new google.maps.InfoWindow();
 
     //Define functions to get translink data
     self.getTranslinkData = function(map) {
@@ -41,10 +46,6 @@ function ViewModel() {
 
                         var infoWindowContent = `<div> <h5>${stopName}</h5> <p>At ${stopPosition}</p>  <p>Routes: ${stopRoutes}</p> </div>`;
 
-                        var infoWindow = new google.maps.InfoWindow({
-                            content: infoWindowContent
-                        });
-
                         var marker = new google.maps.Marker({
                             map: map,
                             icon: image,
@@ -56,6 +57,7 @@ function ViewModel() {
                             title: item.Name
                         });
                         marker.addListener('click', function() {
+                            infoWindow.setContent(infoWindowContent);
                             infoWindow.open(map, marker);
                         });
                     });
