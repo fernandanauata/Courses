@@ -1,5 +1,3 @@
-// var infoWindow = new google.maps.InfoWindow();
-
 function ViewModel() {
     var self = this;
 
@@ -11,6 +9,7 @@ function ViewModel() {
 
     // Initialize infoWindow
     var infoWindow = new google.maps.InfoWindow();
+    self.markers = [];
 
     //Define functions to get translink data
     self.getTranslinkData = function(map) {
@@ -54,12 +53,14 @@ function ViewModel() {
                                 lat: parseFloat(item.Latitude),
                                 lng: parseFloat(item.Longitude)
                             },
+                            category: item.WheelchairAccess,
                             title: item.Name
                         });
                         marker.addListener('click', function() {
                             infoWindow.setContent(infoWindowContent);
                             infoWindow.open(map, marker);
                         });
+                    self.markers.push(marker);
                     });
                 }
             })
@@ -74,33 +75,54 @@ function ViewModel() {
         var openweathermapURL = "http://api.openweathermap.org/data/2.5/weather?q=vancouver,ca&units=metric&id=524901&APPID=3fe2fae0071d0cbe47021bf06fb9a1af";
 
         var openWeather = $.ajax({
-            type: "GET",
-            url: openweathermapURL,
-            data: null,
-            dataType: "json",
-            success: function(content, textStatus, jqXHR) {
-                self.weatherData(content);
+                type: "GET",
+                url: openweathermapURL,
+                data: null,
+                dataType: "json",
+                success: function(content, textStatus, jqXHR) {
+                    self.weatherData(content);
 
-                //Gets the current weather
-                var currWeather = content.main.temp;
-                //Check the current weather and deliver a different message
-                if (currWeather < 0) {
-                  $(".weather-check").text(`The Weather right now is ${currWeather}°C. Stay warm!`);
-                } if (currWeather < -10) {
-                  $(".weather-check").text(`The Weather right now is ${currWeather}°C. It's freazing!`);
-                } if (currWeather > 0) {
-                  $(".weather-check").text(`The Weather right now is ${currWeather}°C. Enjoy your day!`);
+                    //Gets the current weather
+                    var currWeather = content.main.temp;
+                    //Check the current weather and deliver a different message
+                    if (currWeather < 0) {
+                        $(".weather-check").text(`The Weather right now is ${currWeather}°C. Stay warm!`);
+                    }
+                    if (currWeather < -10) {
+                        $(".weather-check").text(`The Weather right now is ${currWeather}°C. It's freazing!`);
+                    }
+                    if (currWeather > 0) {
+                        $(".weather-check").text(`The Weather right now is ${currWeather}°C. Enjoy your day!`);
+                    }
                 }
-            }
-        })
-        .fail(function() {
-            alert("error");
-        });
+            })
+            .fail(function() {
+                alert("error");
+            });
     };
 
-    self.addBusStops = function() {
-            //Add data to translinkNameAux placeholder - Make the string into a JSON
-            self.translinkNameAux(JSON.parse(ko.toJSON(self.translinkName)));
-    };
+    self.checkValue = ko.observable(false);
+
+    self.filterMarkers = function() {
+
+      if (ko.toJSON(self.checkValue) === "true") {
+          self.markers.forEach(function(marker){
+            // Check if the bus stop is accessible
+            if (marker.category > 0) {
+              marker.setVisible(true);
+            }
+            else {
+              marker.setVisible(false);
+            }
+          });
+      }
+      else {
+        // If the check box is not check all bus stops markers are shown
+        self.markers.forEach(function(marker){
+          marker.setVisible(true);
+        });
+      }
+      return true;
+    }
 
 }
