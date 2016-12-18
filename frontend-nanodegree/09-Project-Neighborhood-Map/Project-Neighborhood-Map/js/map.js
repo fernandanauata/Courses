@@ -20,12 +20,12 @@ function initMap() {
 
 
     //Instanciate viewModel object
-    var viewModel = new ViewModel();
+    var viewModel = new ViewModel(map);
 
     //Apply bindings to viewModel
     ko.applyBindings(viewModel);
 
     //Retreive data
-    viewModel.getTranslinkData(map);
-    viewModel.getWeatherData(map);
+    viewModel.getTranslinkData();
+    viewModel.getWeatherData();
 }

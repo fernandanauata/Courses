@@ -6,13 +6,15 @@ html, body {
 }
 
 h2 {
+  margin-top: 40px;
+}
+h2, p, li, form {
     color: #525454;
-    font-size: 250%;
-    margin-top: 40px;
 }
 
-p {
-    font-size: 150%;
+select {
+  height: 85vw;
+  width: 100%;
 }
 
 .container-weather {
@@ -23,7 +25,6 @@ p {
     justify-content: flex-end;
     padding: 0.5%;
     text-align: center;
-    font-size: smaller;
 }
 
 .weather-box {
@@ -68,6 +69,7 @@ p {
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
+    overflow: scroll;
 }
 
 .side-menu-content {

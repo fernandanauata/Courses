@@ -5,10 +5,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <!-- Font Awesome -->
     <script src="https://use.fontawesome.com/207598e8b2.js"></script>
     <!-- Custom CSS -->
@@ -21,7 +17,7 @@
 
     <div class="container-weather">
         <article class="weather-box">
-            <p class="weather-check">
+            <p class="weather-check" data-bind="text: weatherMessage">
                 Check the weather before leaving
             </p>
         </article>
@@ -34,19 +30,26 @@
             <div class="side-menu-content">
                 <h2>Bus stops in Downtown Vancouver</h2>
                 <p>
-                    Click on the checkboxes to refine the markers
+                    Click on the checkbox to refine the markers and the list
                 </p>
 
                 <form action="">
                     <input type="checkbox" data-bind="checked: checkValue, click: filterMarkers" name="bus" value="Accessible"> Wheelchair Accessible
                 </form>
+
+                <br />
+<select multiple="multiple" height="5" data-bind="options:translinkNameAux, selectedOptions:selectedItems, click: selectItemFromList"> </select>
+
+                <!-- <ul data-bind="foreach: translinkNameAux">
+                    <li data-bind="text: $data, click: $parent.selectItemFromList">
+                    </li>
+                </ul> -->
+
             </div>
         </article>
     </aside>
 
-    <div id="map">
-
-    </div>
+    <main id="map"> </main>
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
