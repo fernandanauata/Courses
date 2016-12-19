@@ -82,7 +82,7 @@ function ViewModel(map) {
                 }
             })
             .fail(function() {
-                alert("Translink API is not working!");
+                console.log("Translink API is not working!");
             });
     };
 
@@ -116,7 +116,7 @@ function ViewModel(map) {
                 }
             })
             .fail(function() {
-                alert("Open Weather API is not working!");
+                console.log("Open Weather API is not working!");
             });
     };
 
