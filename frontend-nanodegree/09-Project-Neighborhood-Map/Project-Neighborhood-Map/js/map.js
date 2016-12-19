@@ -25,5 +25,5 @@ function initMap() {
  * Error callback for GMap API request
  */
 mapError = function() {
-  alert("error");
+  alert("Google Map is not working!");
 };
