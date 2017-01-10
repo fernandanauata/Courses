@@ -5,9 +5,7 @@ This project was built using Javascript, jQuery, Jasmine (JavaScript Testing Fra
 
 ## Open the Project
 
-Please, check the live website [here](https://fernandanauata.github.io/Courses/frontend-nanodegree/010-Project-Feed-Reader-Testing/frontend-nanodegree-feedreader-master/).
-
-Or clone this file on your local computer and open the `index.html` file on your browser. The testing was written on the `feedreader.js` you shall open this file in your code editor and play with it.
+Clone this file on your local computer and open the `index.html` file on your browser. The testing was written on the `feedreader.js` you shall open this file in your code editor and play with it.
 
 
 ## Step by step
