@@ -8,7 +8,7 @@ var isMobile = function() {
 
 $(function() { // wait for document ready
 
-    if (isMobile() === false) {
+    if (!isMobile()) {
         // Init
         var controller = new ScrollMagic.Controller();
 

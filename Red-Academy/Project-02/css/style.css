@@ -1,6 +1,6 @@
 /*CSS FOR CUSTOM FONT*/
 
-font-face {
+@font-face {
     font-family: 'Gotham';
     src: url('../fonts/gotham/Gotham-Bold.eot');
     src: url('../fonts/gotham/Gotham-Bold.eot?#iefix') format('embedded-opentype'), url('../fonts/gotham/Gotham-Bold.woff') format('woff'), url('../fonts/gotham/Gotham-Bold.ttf') format('truetype'), url('../fonts/gotham/Gotham-Bold.svg#Gotham-Bold') format('svg');
@@ -30,6 +30,7 @@ font-face {
 body {
     font-family: 'Gotham', Arial, sans-serif;
     overflow-x: hidden;
+    margin: 0;
 }
 
 h1, h2, a {
@@ -489,6 +490,11 @@ footer {
     color: #E5E5E7;
     line-height: 300%;
     text-align: center;
+}
+
+footer p {
+  margin: 0;
+  color: #E5E5E7;
 }
 
 
