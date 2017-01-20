@@ -222,13 +222,11 @@ menu {
 
 .aboutme {
     width: 100vw;
-    height: 100vh;
-    /*display: none;*/
 }
 
 .aboutme-left {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     display: inline-block;
 }
 
@@ -263,7 +261,6 @@ menu {
     width: 100%;
     height: 100%;
     float: right;
-    display: none;
 }
 
 .aboutme-left-container {
@@ -279,7 +276,7 @@ menu {
     justify-content: center;
     -ms-flex-line-pack: center;
     align-content: center;
-    height: 100%;
+    height: 100vh;
 }
 
 .aboutme-left-container picture {
@@ -300,9 +297,6 @@ menu {
     flex-direction: column;
     -ms-flex-line-pack: center;
     align-content: center;
-    height: 100%;
-    height: 100vh;
-    display: none;
 }
 
 figcaption {
@@ -499,8 +493,18 @@ footer p {
 
 
 /*MEDIA QUERIES*/
+@media screen and (orientation: landscape) {
+  .aboutme {
+    height: 100%;
+  }
 
-@media screen and (min-width: 600px) {
+  .carousel {
+    max-width: 100vw;
+  }
+}
+
+
+@media screen and (min-width: 600px) and (orientation: portrait){
     header {
         background: url("../img/header-img/fernanda-nauata-tablet-horizontal-header-img.jpg") #0A0B0D;
     }
@@ -558,7 +562,7 @@ footer p {
     }
 }
 
-@media screen and (min-width: 1140px) {
+@media screen and (min-width: 1140px) and (orientation: landscape) {
     header {
         background: url("../img/header-img/fernanda-nauata-large-header-img.jpg") no-repeat center center fixed #0A0B0D;
     }
@@ -572,6 +576,48 @@ footer p {
         width: 40vw;
     }
     .aboutme {
+        display: block;
+    }
+    .aboutme-mobile {
+        height: 0;
+    }
+    .aboutme-mobile .aboutme-mobile-left, .aboutme-mobile .aboutme-mobile-right {
+        display: none;
+    }
+    .aboutme-left {
+        width: 50%;
+        height: 100%;
+        display: inline-block;
+    }
+    .aboutme-right {
+        width: 50%;
+        height: 100%;
+        float: right;
+        display: block;
+    }
+    .aboutme-right-container {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+    }
+    #pinContainer {
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        -webkit-perspective: 1000;
+        perspective: 1000;
+    }
+    #slideContainer {
+        /* to contain 4 panels, each with 100% of window width */
+        width: 400vw;
+    }
+    .panel {
+        height: 100%;
+        width: 25%;
+        /* relative to parent -> 25% of 400% = 100% of window width */
+        float: left;
+    }
+    .aboutme {
         height: 100vh;
         width: 100vw;
     }
@@ -581,9 +627,15 @@ footer p {
     .socialmedia a:not(:last-child) {
         padding-right: 20%;
     }
+    .resumebutton, .portfoliobutton {
+        padding: 0.5% 0.5% 0.5% 0.5%;
+    }
+    .carousel {
+        max-width: 100vw;
+    }
 }
 
-@media screen and (min-width: 2040px) {
+@media screen and (min-width: 2040px) and (orientation: landscape) {
     header {
         background: url("../img/header-img/fernanda-nauata-xlarge-header-img.jpg") no-repeat center center fixed #0A0B0D;
     }
