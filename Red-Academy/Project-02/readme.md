@@ -11,4 +11,4 @@ This website work as my online portfolio showcasing what I have done as a Front-
 How it works
 ------
 
-To check the website [click here](https://fernandanauata.github.io/Courses/Red-Academy/Project-02/)
+To check the website [click here](https://fernandanauata.com)
