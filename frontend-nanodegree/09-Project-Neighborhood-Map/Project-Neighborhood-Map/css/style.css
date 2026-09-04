@@ -265,9 +265,67 @@ a {
     gap: 0.4rem;
 }
 
+.near-me {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 0.4rem;
+}
+
+.near-me-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.near-me-button.is-active {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-accent-contrast);
+}
+
+.near-me-status {
+    margin: 0 0 0.75rem;
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    min-height: 1rem;
+}
+
 .field {
     display: block;
     margin-bottom: 0.75rem;
+}
+
+.field--inline {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0;
+    flex-shrink: 0;
+}
+
+.field--inline .field__label {
+    margin-bottom: 0;
+    white-space: nowrap;
+}
+
+.field--inline select {
+    padding: 0.35rem 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.4rem;
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-size: 0.8rem;
 }
 
 .field__label {
@@ -382,6 +440,39 @@ a {
     background: var(--color-limited);
 }
 
+/* "You are here" marker, used by the Find Near Me feature */
+.user-dot {
+    display: block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    border: 2px solid #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+    position: relative;
+}
+
+.user-dot__pulse {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    opacity: 0.35;
+    animation: user-dot-pulse 2s ease-out infinite;
+}
+
+@keyframes user-dot-pulse {
+    0% { transform: scale(0.4); opacity: 0.45; }
+    100% { transform: scale(1.6); opacity: 0; }
+}
+
+.user-radius {
+    fill: var(--color-accent);
+    fill-opacity: 0.08;
+    stroke: var(--color-accent);
+    stroke-opacity: 0.4;
+}
+
 /* ---------------------------------------------------------------------
    Stop list rows
    ------------------------------------------------------------------ */
@@ -431,6 +522,17 @@ a {
     display: flex;
     flex-direction: column;
     min-width: 0;
+    flex: 1;
+}
+
+.stop-row__distance {
+    flex-shrink: 0;
+    align-self: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    white-space: nowrap;
+    padding-left: 0.4rem;
 }
 
 .stop-row__name {
@@ -520,6 +622,12 @@ a {
     background: var(--color-bg);
 }
 
+.detail-distance {
+    margin: -0.5rem 0 1rem;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+}
+
 .detail-facts {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -558,6 +666,68 @@ a {
     border: 1px solid var(--color-border);
     border-radius: 999px;
     padding: 0.2rem 0.6rem;
+    font-size: 0.78rem;
+}
+
+.detail-departures {
+    margin-bottom: 1.25rem;
+}
+
+.detail-departures__badge {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--color-text-muted);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 0.1rem 0.45rem;
+    margin-left: 0.4rem;
+    vertical-align: middle;
+}
+
+.detail-departures__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+p.detail-departures__list {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
+
+p.detail-departures__list.is-loading {
+    opacity: 0.7;
+}
+
+.departure-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 0.85rem;
+}
+
+.departure-row:last-child {
+    border-bottom: none;
+}
+
+.departure-row__route {
+    font-weight: 700;
+    min-width: 2.5rem;
+}
+
+.departure-row__eta {
+    flex: 1;
+    color: var(--color-accent);
+    font-weight: 600;
+}
+
+.departure-row__time {
+    color: var(--color-text-muted);
     font-size: 0.78rem;
 }
 

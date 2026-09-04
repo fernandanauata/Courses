@@ -1,7 +1,13 @@
 import { isAccessible, accessibilityLabel, splitStopName, scheduleUrl } from '../stops.js';
 import { escapeHtml } from '../util.js';
+import { formatDistance } from '../geo.js';
+import { getUpcomingDepartures } from '../departures.js';
 
 export function createStopDetail(root, { onClose }) {
+  // Guards against a slow departures fetch for a stop the user has since
+  // navigated away from landing its result in the (now different) panel.
+  let renderToken = 0;
+
   root.addEventListener('click', (event) => {
     if (event.target.closest('#detail-close')) onClose();
   });
@@ -9,7 +15,9 @@ export function createStopDetail(root, { onClose }) {
     if (event.key === 'Escape') onClose();
   });
 
-  function render(stop) {
+  function render(stop, { distanceM } = {}) {
+    const token = ++renderToken;
+
     if (!stop) {
       root.hidden = true;
       root.innerHTML = '';
@@ -26,6 +34,7 @@ export function createStopDetail(root, { onClose }) {
       <p class="detail-badge ${accessible ? 'is-accessible' : 'is-limited'}">
         <span aria-hidden="true">${accessible ? '♿' : '—'}</span> ${accessibilityLabel(stop)}
       </p>
+      ${distanceM != null ? `<p class="detail-distance">${formatDistance(distanceM)} away</p>` : ''}
       <dl class="detail-facts">
         <div><dt>Stop number</dt><dd>${escapeHtml(stop.code)}</dd></div>
         <div><dt>Location</dt><dd>${stop.lat.toFixed(5)}, ${stop.lon.toFixed(5)}</dd></div>
@@ -36,11 +45,43 @@ export function createStopDetail(root, { onClose }) {
         <h3 class="detail-subhead">Routes served</h3>
         <ul class="detail-routes">${stop.routes.map((route) => `<li>${escapeHtml(route)}</li>`).join('')}</ul>
       ` : ''}
+      <div class="detail-departures">
+        <h3 class="detail-subhead">Next departures <span class="detail-departures__badge">Scheduled</span></h3>
+        <p class="detail-departures__list is-loading">Loading today's schedule…</p>
+      </div>
       <a class="detail-link" href="${scheduleUrl(stop)}" target="_blank" rel="noopener noreferrer">
         View live schedule on translink.ca <span aria-hidden="true">↗</span>
       </a>
     `;
     root.querySelector('#detail-close').focus();
+    loadDepartures(stop, token);
+  }
+
+  async function loadDepartures(stop, token) {
+    const listEl = root.querySelector('.detail-departures__list');
+    try {
+      const { departures, totalToday } = await getUpcomingDepartures(stop, { limit: 5 });
+      if (token !== renderToken || !listEl) return;
+
+      listEl.classList.remove('is-loading');
+      if (!totalToday) {
+        listEl.textContent = 'No scheduled service found for this stop today.';
+      } else if (!departures.length) {
+        listEl.textContent = "No more scheduled departures today — see the live schedule link below.";
+      } else {
+        listEl.outerHTML = `<ul class="detail-departures__list">${departures.map((d) => `
+          <li class="departure-row">
+            <span class="departure-row__route">${escapeHtml(d.route)}</span>
+            <span class="departure-row__eta">${d.minutesFromNow <= 1 ? 'Due' : `${d.minutesFromNow} min`}</span>
+            <span class="departure-row__time">${d.time}</span>
+          </li>`).join('')}</ul>`;
+      }
+    } catch (err) {
+      if (token !== renderToken || !listEl) return;
+      listEl.classList.remove('is-loading');
+      listEl.textContent = "Couldn't load the schedule for this stop.";
+      console.error('Failed to load departures:', err);
+    }
   }
 
   return { render };
