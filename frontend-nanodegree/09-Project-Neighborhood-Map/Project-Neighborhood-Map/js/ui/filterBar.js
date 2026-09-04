@@ -1,15 +1,10 @@
-import { debounce, WHEELCHAIR_ICON_SVG } from '../util.js';
+import { debounce } from '../util.js';
 import { formatDistance } from '../geo.js';
 
 const RADIUS_OPTIONS = [500, 800, 1500, 3000];
 
 export function createFilterBar(root, store) {
   root.innerHTML = `
-    <div class="legend">
-      <span class="legend-item"><span class="stop-pin stop-pin--accessible" aria-hidden="true">${WHEELCHAIR_ICON_SVG}</span> Accessible</span>
-      <span class="legend-item"><span class="stop-pin stop-pin--limited" aria-hidden="true"></span> Not confirmed accessible</span>
-    </div>
-
     <div class="near-me">
       <button type="button" id="near-me-button" class="near-me-button">
         <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">

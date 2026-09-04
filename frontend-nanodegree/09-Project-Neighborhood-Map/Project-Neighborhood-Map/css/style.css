@@ -25,11 +25,23 @@
        the token file's own primary interactive/button color. */
     --color-accent: #5c7960;
     --color-accent-contrast: #ffffff; /* colors.text.onSemantic */
-    /* Reuses --color-accent rather than a separate hex: this app's
-       "accessible" marker is the positive/primary state, and sage green
-       is literally this palette's primary brand hue. */
-    --color-accessible: var(--color-accent);
-    --color-limited: #a0a0a0; /* colors.text.disabled — deliberately muted */
+    /* Dedicated semantic green — deliberately NOT var(--color-accent).
+       These render on map tiles (a different contrast context than the
+       app chrome the sage brand color governs) and need to match a
+       conventional "accessible" green regardless of brand hue. Verified:
+       white icon on #2e7d32 is 5.13:1; the fill itself is 3.53:1 against
+       the light-theme map tile (non-text/graphical, so the 3:1 floor). */
+    --color-accessible: #2e7d32;
+    /* The icon drawn on top of --color-accessible — white in light mode,
+       but on dark mode's lighter #4caf50 (chosen for 5.09:1 against the
+       dark map tile) a white icon only reaches 2.78:1, under the 3:1
+       non-text minimum. A dark icon on that same fill hits 4.98:1. */
+    --color-on-accessible: #ffffff;
+    /* Single value across both themes (not text, so no AA text-contrast
+       obligation) — a marker fill, always paired with a dashed border and
+       a "?" glyph so the accessible/unconfirmed distinction never rests on
+       hue alone (WCAG 1.4.1). White icon on this fill: 4.61:1. */
+    --color-limited: #757575;
     /* colors.brand.accent.default / colors.border.focus — a color
        intentionally distinct from --color-accent above (see tokens.ts:
        "focus indicators need to stand out against both light and dark
@@ -53,6 +65,16 @@
     --font-display: var(--font-body);
     --header-height: 3.5rem;
     --sidebar-width: 22rem;
+    /* Total footprint the fixed Map/List switch reserves at the bottom of
+       the viewport: its own height (2 x 0.25rem padding + one 44px
+       touch-target button = 3.25rem) plus the 0.5rem gap .view-toggle
+       keeps above the true viewport edge. Must equal that gap + height
+       exactly, or the sidebar/detail-panel bottom edge (positioned via
+       this variable) either overlaps the bar or leaves a dead gap above
+       it — env() falls back to 0 on platforms without a home-indicator
+       inset. */
+    --mobile-toggle-height: calc(3.75rem + env(safe-area-inset-bottom, 0px));
+    --touch-target: 2.75rem; /* 44px — Task 1.2's explicit minimum hit area */
     --radius: 0.75rem; /* == radius.container (12px) */
     --radius-card: 0.5rem; /* == radius.card (8px) */
     --radius-control: 0.375rem; /* == radius.control (6px) — inputs, selects, icon buttons */
@@ -60,8 +82,15 @@
     --radius-full: 999px; /* == radius.full — pills, chips, circular buttons */
 }
 
+/* Dark palette shared by both the automatic (OS-driven) and explicit
+   (ThemeToggle) paths below — kept as one block and referenced by two
+   selectors rather than duplicated, so there's exactly one place to edit
+   a dark value. `:not([data-theme="light"])` on the media-query path lets
+   an explicit *light* choice override a dark OS preference; the plain
+   attribute selector below it lets an explicit *dark* choice apply even
+   when the OS preference is light. */
 @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not([data-theme="light"]) {
         /* No dark entries exist in the source tokens (it's single-theme by
            design) — these are derived from the same palette's own darker
            and lighter steps rather than freehand colors, so the app stays
@@ -75,7 +104,8 @@
         --color-text-muted: #c5d5c8; /* colors.brand.primary[300] */
         --color-accent: #a4bea8; /* colors.brand.primary[400] — lightened so it still pops on dark */
         --color-accent-contrast: #2b3e31; /* colors.brand.primary[900] */
-        --color-accessible: var(--color-accent);
+        --color-accessible: #4caf50; /* 5.09:1 against the dark-theme map tile */
+        --color-on-accessible: #14331a; /* dark icon on the lighter dark-mode green — see note above */
         --color-focus: #d8cee0; /* colors.brand.accent.subtle */
         /* error.strong (used above) drops to 3.44:1 on this dark surface —
            lightened toward white until it clears 4.5:1 again (5.52:1),
@@ -86,8 +116,37 @@
     }
 }
 
+:root[data-theme="dark"] {
+    --color-bg: #141414;
+    --color-surface: #1e1e1e;
+    --color-border: #3e5644;
+    --color-border-strong: #5c7960;
+    --color-text: #ffffff;
+    --color-text-strong: #ffffff;
+    --color-text-muted: #c5d5c8;
+    --color-accent: #a4bea8;
+    --color-accent-contrast: #2b3e31;
+    --color-accessible: #4caf50;
+    --color-on-accessible: #14331a;
+    --color-focus: #d8cee0;
+    --color-error: #cd7373;
+    --shadow-panel: 0 8px 28px rgba(0, 0, 0, 0.5);
+    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
 * {
     box-sizing: border-box;
+}
+
+/* The native `hidden` attribute and a class-level `display` declaration
+   sit at equal CSS specificity — without this, any component styled with
+   e.g. `.foo { display: flex }` would render even while `hidden`, because
+   an author rule at equal specificity beats the UA stylesheet's own
+   `[hidden] { display: none }`. Caught via .weather-box and .modal-backdrop
+   both doing exactly that (real elements, not hypothetical) — this is the
+   one-time fix rather than a per-component patch. */
+[hidden] {
+    display: none !important;
 }
 
 html,
@@ -170,6 +229,7 @@ a {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    min-width: 0;
 }
 
 .app-header__place {
@@ -187,23 +247,50 @@ a {
     display: none;
 }
 
-.menu-toggle {
+.app-header__actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+}
+
+/* Shared by the header's icon buttons (info CTA, theme toggle) — a plain
+   square hit area at the 44px minimum, transparent by default so a
+   "ghost" button doesn't compete visually with the primary search/filter
+   controls below it. */
+.story-cta,
+.theme-toggle {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
-    border: 1px solid var(--color-border);
+    width: var(--touch-target);
+    height: var(--touch-target);
+    border: none;
     border-radius: var(--radius-control);
-    background: var(--color-surface);
-    color: var(--color-text);
+    background: transparent;
+    color: var(--color-text-muted);
     cursor: pointer;
     flex-shrink: 0;
     transition: var(--transition-smooth);
 }
 
-.menu-toggle:hover {
+.story-cta:hover,
+.theme-toggle:hover {
     background: var(--color-bg);
+    color: var(--color-text);
+}
+
+.theme-toggle__icon--moon {
+    display: none;
+}
+
+.theme-toggle[aria-pressed="true"] .theme-toggle__icon--sun {
+    display: none;
+}
+
+.theme-toggle[aria-pressed="true"] .theme-toggle__icon--moon {
+    display: block;
 }
 
 .app-body {
@@ -213,6 +300,13 @@ a {
 }
 
 .map {
+    /* Also the positioning containing block for #map-legend-root's
+       absolutely-positioned overlay — without this, that overlay would
+       position against .app-body instead (the nearest ancestor that has
+       one), which spans the sidebar's width too at the desktop breakpoint
+       and would place the legend behind the sidebar rather than over the
+       map's own bottom-left corner. */
+    position: relative;
     flex: 1;
     height: 100%;
     background: var(--color-bg);
@@ -224,36 +318,79 @@ a {
 }
 
 /* ---------------------------------------------------------------------
-   Sidebar (bottom sheet on mobile, docked panel on wider screens)
+   Mobile Map/List switch (< 1024px only)
+   ------------------------------------------------------------------
+   Below the split-view breakpoint the map and the list can't both be
+   comfortably usable at once, so this is the explicit, discoverable
+   switch between full-screen map and full-screen list — replacing an
+   earlier partial "peek" sheet that clipped list content and had no
+   clear affordance of its own.
+   ------------------------------------------------------------------ */
+.view-toggle {
+    position: fixed;
+    left: 50%;
+    bottom: calc(0.5rem + env(safe-area-inset-bottom, 0px));
+    transform: translateX(-50%);
+    z-index: 30;
+    display: flex;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-panel);
+    padding: 0.25rem;
+    gap: 0.25rem;
+}
+
+.view-toggle__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    height: var(--touch-target);
+    padding: 0 1rem;
+    border: none;
+    border-radius: var(--radius-full);
+    background: transparent;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.view-toggle__btn.is-active {
+    background: var(--color-accent);
+    color: var(--color-accent-contrast);
+}
+
+/* ---------------------------------------------------------------------
+   Sidebar — a full-screen swap driven by body.is-list-view below 1024px
+   (see the Map/List switch above), a static docked panel at/above it.
    ------------------------------------------------------------------ */
 .sidebar {
     position: absolute;
-    inset: auto 0 0 0;
+    /* top MUST be a real value, not auto: an absolutely positioned box
+       with top:auto sizes to its own content height instead of stretching
+       between the two edges — harmless for most content, but #stop-list's
+       virtualization spacer is deliberately ~400,000px tall (see
+       stopList.js) to get correct scrollbar proportions, so top:auto here
+       let the *sidebar itself* grow to that height instead of staying
+       viewport-bounded and letting .stop-list scroll internally. */
+    inset: 0 0 var(--mobile-toggle-height) 0;
     z-index: 15;
     background: var(--color-surface);
-    border-top: 1px solid var(--color-border);
     box-shadow: var(--shadow-panel);
     display: flex;
     flex-direction: column;
-    max-height: 45%;
-    transform: translateY(calc(100% - 3.25rem));
-    transition: transform 0.25s ease;
-    border-radius: var(--radius-outer) var(--radius-outer) 0 0;
+    /* Not just translateY(100%): the sidebar's own height already excludes
+       the --mobile-toggle-height reserved below it (see `inset` above), so
+       shifting by only its own height undershoots the true viewport edge
+       by exactly that reserved amount, leaving it peeking through. Adding
+       it back to the shift is what actually clears the viewport. */
+    transform: translateY(calc(100% + var(--mobile-toggle-height)));
+    transition: transform 0.2s ease;
 }
 
-.sidebar::before {
-    content: "";
-    position: absolute;
-    top: 0.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2.5rem;
-    height: 0.25rem;
-    border-radius: var(--radius-full);
-    background: var(--color-border);
-}
-
-.sidebar.is-open {
+body.is-list-view .sidebar {
     transform: translateY(0);
 }
 
@@ -278,10 +415,17 @@ a {
     flex: 1;
     overflow-y: auto;
     padding: 0 0.5rem 1rem;
+    /* Virtualized rows are positioned absolutely against this element —
+       see .stop-list__spacer/.stop-row below. */
+    position: relative;
 }
 
-@media (min-width: 768px) {
-    .menu-toggle {
+.stop-list__spacer {
+    position: relative;
+}
+
+@media (min-width: 1024px) {
+    .view-toggle {
         display: none;
     }
 
@@ -291,18 +435,12 @@ a {
 
     .sidebar {
         position: static;
+        inset: auto;
         width: var(--sidebar-width);
-        max-height: none;
         height: 100%;
         transform: none;
-        border-radius: 0;
-        border-top: none;
         border-right: 1px solid var(--color-border);
         box-shadow: none;
-    }
-
-    .sidebar::before {
-        display: none;
     }
 
     .app-body {
@@ -313,21 +451,6 @@ a {
 /* ---------------------------------------------------------------------
    Filter bar
    ------------------------------------------------------------------ */
-.legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem 1.25rem;
-    margin-bottom: 1rem;
-    font-size: 0.8rem;
-    color: var(--color-text-muted);
-}
-
-.legend-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-}
-
 .near-me {
     display: flex;
     align-items: center;
@@ -340,7 +463,8 @@ a {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    padding: 0.45rem 0.75rem;
+    min-height: var(--touch-target);
+    padding: 0.45rem 0.9rem;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-full);
     background: var(--color-bg);
@@ -384,6 +508,7 @@ a {
 }
 
 .field--inline select {
+    min-height: var(--touch-target);
     padding: 0.35rem 0.5rem;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-control);
@@ -402,6 +527,7 @@ a {
 
 .field input[type="search"] {
     width: 100%;
+    min-height: var(--touch-target);
     padding: 0.55rem 0.75rem;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-control);
@@ -414,8 +540,8 @@ a {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    min-height: var(--touch-target);
     font-size: 0.9rem;
-    margin-bottom: 0.5rem;
     cursor: pointer;
 }
 
@@ -447,25 +573,37 @@ a {
 }
 
 .stop-pin--accessible {
-    width: 26px;
-    height: 26px;
-    font-size: 14px;
+    width: 28px;
+    height: 28px;
+    font-size: 16px; /* the wheelchair icon is sized in `em`, so this is its 16x16px */
+    color: var(--color-on-accessible);
     background: var(--color-accessible);
 }
 
 .stop-pin--limited {
-    width: 14px;
-    height: 14px;
+    /* Dashed border + a "?" glyph (rendered by accessibilityGlyph() in
+       util.js) rather than just a smaller, differently-colored dot — the
+       shape itself has to carry the "unconfirmed" meaning per WCAG 1.4.1,
+       not only its hue. */
+    width: 18px;
+    height: 18px;
+    font-size: 11px;
     background: var(--color-limited);
-    opacity: 0.85;
+    border-style: dashed;
 }
 
-.legend .stop-pin--accessible,
-.legend .stop-pin--limited {
-    width: 20px;
-    height: 20px;
-    font-size: 11px;
-    flex-shrink: 0;
+/* Hover/focus affordance for every marker — native :hover/:focus-visible
+   on the Leaflet element itself, or .is-hovered applied programmatically
+   by mapView.setHovered() when the *sidebar* row is what's hovered (Task
+   6's list-to-map sync). Transform lives on the inner .stop-pin, not the
+   .leaflet-marker-icon: Leaflet sets that element's own inline transform
+   for positioning, and an inline style always wins over a class rule, so
+   scaling it here instead is the only way this doesn't fight Leaflet. */
+.leaflet-marker-icon:hover .stop-pin,
+.leaflet-marker-icon:focus-visible .stop-pin,
+.leaflet-marker-icon.is-hovered .stop-pin {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-focus) 45%, transparent), 0 1px 3px rgba(0, 0, 0, 0.35);
 }
 
 .stop-marker .is-selected {
@@ -489,8 +627,8 @@ a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
+    width: var(--touch-target);
+    height: var(--touch-target);
     border-radius: 50%;
     color: #fff;
     font-weight: 600;
@@ -548,6 +686,13 @@ a {
    Stop list rows
    ------------------------------------------------------------------ */
 .stop-row {
+    /* Absolutely positioned against .stop-list__spacer (top: set inline
+       per-row in stopList.js) — the virtualized-list mechanics described
+       at the top of stopList.js. Height MUST match ROW_HEIGHT there. */
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 58px;
     display: flex;
     align-items: flex-start;
     gap: 0.6rem;
@@ -566,6 +711,15 @@ a {
     box-shadow: inset 3px 0 0 var(--color-accent);
 }
 
+/* Roving keyboard focus within the listbox (see stopList.js's
+   aria-activedescendant handling) — distinct from .is-selected, which
+   reflects the actually-chosen stop regardless of interaction source. A
+   row can be both, neither, or just one. */
+.stop-row.is-active {
+    outline: 2px solid var(--color-focus);
+    outline-offset: -2px;
+}
+
 .stop-row__badge {
     flex-shrink: 0;
     width: 1.4rem;
@@ -580,14 +734,17 @@ a {
 }
 
 .stop-row__badge.is-accessible {
+    color: var(--color-on-accessible);
     background: var(--color-accessible);
 }
 
 .stop-row__badge.is-limited {
+    width: 1rem;
+    height: 1rem;
+    font-size: 0.6rem;
+    margin: 0.3rem 0.2rem 0 0;
     background: var(--color-limited);
-    width: 0.7rem;
-    height: 0.7rem;
-    margin: 0.4rem 0.35rem 0;
+    border: 1px dashed #fff;
 }
 
 .stop-row__text {
@@ -610,6 +767,9 @@ a {
 .stop-row__name {
     font-size: 0.9rem;
     font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .stop-row__name em {
@@ -626,8 +786,7 @@ a {
     white-space: nowrap;
 }
 
-.empty-state,
-.list-hint {
+.empty-state {
     color: var(--color-text-muted);
     font-size: 0.85rem;
     padding: 0.75rem 0.6rem;
@@ -643,17 +802,17 @@ a {
     box-shadow: var(--shadow-panel);
     padding: 1.25rem;
     overflow-y: auto;
-    inset: auto 0 0 0;
-    max-height: 60%;
+    inset: auto 0 var(--mobile-toggle-height) 0;
+    max-height: calc(70% - var(--mobile-toggle-height));
     border-radius: var(--radius-outer) var(--radius-outer) 0 0;
 }
 
 .detail-close {
     position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    width: 2rem;
-    height: 2rem;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: var(--touch-target);
+    height: var(--touch-target);
     border-radius: 50%;
     border: 1px solid var(--color-border);
     background: var(--color-bg);
@@ -669,7 +828,7 @@ a {
 }
 
 .detail-title {
-    margin: 0 2rem 0.5rem 0;
+    margin: 0 3.25rem 0.5rem 0;
     font-size: 1.15rem;
 }
 
@@ -819,7 +978,7 @@ p.detail-departures__list.is-loading {
     text-decoration: underline;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
     .stop-detail {
         inset: auto 1rem 1rem auto;
         left: auto;
@@ -849,6 +1008,145 @@ p.detail-departures__list.is-loading {
 }
 
 /* ---------------------------------------------------------------------
+   Map legend — a floating key over the map, not a filter control (see
+   mapLegend.js). pointer-events:none on the wrapper means a drag that
+   starts anywhere in its padding still moves the map underneath; only
+   the toggle badge and the (rare, expanded) body panel opt back in.
+   ------------------------------------------------------------------ */
+.map-legend {
+    position: absolute;
+    left: 0.75rem;
+    bottom: 0.75rem;
+    z-index: 11;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 0.5rem;
+    pointer-events: none;
+}
+
+.map-legend__toggle {
+    pointer-events: auto;
+    width: var(--touch-target);
+    height: var(--touch-target);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+}
+
+.map-legend__badge {
+    /* The toggle's own resting glyph — full size/opacity when the body is
+       collapsed (it's then the *only* visible key), a quieter handle once
+       the body is already showing the real swatches. */
+    transition: var(--transition-smooth);
+}
+
+.map-legend:not(.is-collapsed) .map-legend__badge {
+    opacity: 0.55;
+    transform: scale(0.85);
+}
+
+.map-legend__body {
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+    backdrop-filter: blur(4px);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    padding: 0.5rem 0.7rem;
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+}
+
+.map-legend.is-collapsed .map-legend__body {
+    display: none;
+}
+
+.map-legend .legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+
+.map-legend .stop-pin--accessible,
+.map-legend .stop-pin--limited {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+    flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------
+   Story modal — origin-story dialog opened from the header's info CTA.
+   ------------------------------------------------------------------ */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.modal {
+    position: relative;
+    background: var(--color-surface);
+    color: var(--color-text);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-panel);
+    padding: 2rem 1.75rem 1.75rem;
+    width: 32rem;
+    max-width: 90vw;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.modal h2 {
+    margin: 0 3.25rem 1rem 0;
+    font-size: 1.2rem;
+}
+
+.modal-body p {
+    margin: 0 0 0.9rem;
+    line-height: 1.55;
+    color: var(--color-text);
+}
+
+.modal-body p:last-child {
+    margin-bottom: 0;
+}
+
+.modal-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: var(--touch-target);
+    height: var(--touch-target);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    background: var(--color-bg);
+    color: var(--color-text);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.modal-close:hover {
+    background: var(--color-border);
+}
+
+/* ---------------------------------------------------------------------
    Leaflet overrides
    ------------------------------------------------------------------ */
 .leaflet-container {
@@ -858,4 +1156,24 @@ p.detail-departures__list.is-loading {
 
 .leaflet-tooltip {
     font-size: 0.75rem;
+}
+
+/* Leaflet's own zoom buttons default to 26x26 — below the 44px minimum
+   this project enforces everywhere else. */
+.leaflet-control-zoom a {
+    width: var(--touch-target) !important;
+    height: var(--touch-target) !important;
+    line-height: var(--touch-target) !important;
+}
+
+@media (max-width: 1023.98px) {
+    /* Keeps Leaflet's own bottom-anchored controls (zoom buttons) and our
+       map-legend above the fixed Map/List switch bar rather than under it. */
+    .leaflet-bottom {
+        margin-bottom: var(--mobile-toggle-height);
+    }
+
+    .map-legend {
+        bottom: calc(var(--mobile-toggle-height) + 0.75rem);
+    }
 }

@@ -1,5 +1,5 @@
 import { isAccessible } from './stops.js';
-import { WHEELCHAIR_ICON_SVG } from './util.js';
+import { accessibilityGlyph } from './util.js';
 
 // Metro Vancouver, roughly Tsawwassen to Maple Ridge — matches the extent
 // of stops in data/stops.json, with a little padding.
@@ -35,10 +35,10 @@ function stopIcon(stop, { selected = false } = {}) {
   const accessible = isAccessible(stop);
   const classes = ['stop-pin', accessible ? 'stop-pin--accessible' : 'stop-pin--limited'];
   if (selected) classes.push('is-selected');
-  const size = accessible ? 26 : 16;
+  const size = accessible ? 28 : 18; // must match .stop-pin--accessible/--limited in style.css
   return L.divIcon({
     className: 'stop-marker',
-    html: `<span class="${classes.join(' ')}">${accessible ? WHEELCHAIR_ICON_SVG : ''}</span>`,
+    html: `<span class="${classes.join(' ')}">${accessibilityGlyph(accessible)}</span>`,
     iconSize: [size, size],
     iconAnchor: [size / 2, size / 2],
   });
@@ -52,7 +52,7 @@ function clusterIcon(cluster) {
   return L.divIcon({
     className: 'stop-cluster',
     html: `<span class="cluster-badge cluster-badge--${tier}">${cluster.getChildCount()}</span>`,
-    iconSize: [40, 40],
+    iconSize: [44, 44], // matches --touch-target in style.css
   });
 }
 
@@ -153,6 +153,21 @@ export function createMapView(container, { onSelect, theme = 'light' } = {}) {
     }
   }
 
+  // Distinct from `select`: this is a lightweight class toggle on the
+  // marker's existing DOM element rather than an icon rebuild, since hover
+  // fires far more often (every list row the pointer crosses) than a real
+  // selection does.
+  let hoveredId = null;
+  function setHovered(stopId) {
+    if (hoveredId === stopId) return;
+    if (hoveredId && markersById.has(hoveredId)) {
+      markersById.get(hoveredId).getElement()?.classList.remove('is-hovered');
+    }
+    hoveredId = stopId;
+    const marker = stopId && markersById.get(stopId);
+    marker?.getElement()?.classList.add('is-hovered');
+  }
+
   let userMarker = null;
   let userCircle = null;
   let userLocationKey = null;
@@ -201,5 +216,5 @@ export function createMapView(container, { onSelect, theme = 'light' } = {}) {
     map.fitBounds(L.latLngBounds(stops.map((s) => [s.lat, s.lon])).pad(0.05));
   }
 
-  return { map, setStops, setVisible, select, fitToStops, setTheme, setUserLocation };
+  return { map, setStops, setVisible, select, setHovered, fitToStops, setTheme, setUserLocation };
 }

@@ -24,14 +24,18 @@
     <a class="skip-link" href="#stop-list">Skip to stop list</a>
 
     <header class="app-header">
-        <button type="button" id="menu-toggle" class="menu-toggle" aria-expanded="false" aria-controls="sidebar">
-            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
-                <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
-            </svg>
-            <span class="visually-hidden">Toggle stop list</span>
-        </button>
         <h1>Accessible Bus Stops <span class="app-header__place">Vancouver, BC</span></h1>
         <p id="data-meta" class="app-header__meta"></p>
+        <div class="app-header__actions">
+            <button type="button" id="story-cta" class="story-cta" aria-label="About this project and accessibility mission">
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none" />
+                    <line x1="12" y1="11" x2="12" y2="16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    <circle cx="12" cy="7.6" r="1.15" fill="currentColor" />
+                </svg>
+            </button>
+            <div id="theme-toggle-root"></div>
+        </div>
     </header>
 
     <div class="app-body">
@@ -41,7 +45,9 @@
             <div id="stop-list" class="stop-list"></div>
         </aside>
 
-        <main id="map" class="map" aria-label="Map of accessible bus stops in Metro Vancouver"></main>
+        <main id="map" class="map" aria-label="Map of accessible bus stops in Metro Vancouver">
+            <div id="map-legend-root"></div>
+        </main>
 
         <section id="stop-detail" class="stop-detail" hidden aria-live="polite" aria-label="Stop details"></section>
 
@@ -49,7 +55,11 @@
             <span aria-hidden="true">🌤️</span>
             <span id="weather-text"></span>
         </div>
+
+        <div id="view-toggle-root"></div>
     </div>
+
+    <div id="story-modal-root"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"
         integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous"></script>

@@ -4,6 +4,10 @@ import { createMapView } from './map.js';
 import { createFilterBar } from './ui/filterBar.js';
 import { createStopList } from './ui/stopList.js';
 import { createStopDetail } from './ui/stopDetail.js';
+import { createMapLegend } from './ui/mapLegend.js';
+import { createThemeToggle } from './ui/themeToggle.js';
+import { createStoryModal } from './ui/storyModal.js';
+import { createViewToggle } from './ui/viewToggle.js';
 import { loadWeather } from './weather.js';
 import { getCurrentPosition, haversineMeters } from './geo.js';
 
@@ -14,22 +18,40 @@ async function main() {
     query: '',
     accessibleOnly: true,
     selectedId: null,
+    hoveredId: null,
+    mobileView: 'map', // 'map' | 'list' — ignored above the 1024px split-view breakpoint
     nearMe: { status: 'idle', lat: null, lon: null, radiusM: 800, error: null },
   });
 
   const select = (id) => store.setState({ selectedId: id });
   const clearSelection = () => store.setState({ selectedId: null });
 
-  const darkModeQuery = window.matchMedia(DARK_MODE_QUERY);
+  const systemDarkQuery = window.matchMedia(DARK_MODE_QUERY);
   const mapView = createMapView(document.getElementById('map'), {
     onSelect: select,
-    theme: darkModeQuery.matches ? 'dark' : 'light',
+    theme: systemDarkQuery.matches ? 'dark' : 'light',
   });
-  darkModeQuery.addEventListener('change', (e) => mapView.setTheme(e.matches ? 'dark' : 'light'));
+
+  createThemeToggle(document.getElementById('theme-toggle-root'), {
+    systemQuery: systemDarkQuery,
+    onChange: (theme) => mapView.setTheme(theme),
+  });
+
+  createMapLegend(document.getElementById('map-legend-root'));
+
+  const storyModal = createStoryModal(document.getElementById('story-modal-root'));
+  const storyCta = document.getElementById('story-cta');
+  storyCta.addEventListener('click', () => storyModal.open(storyCta));
 
   const filterBar = createFilterBar(document.getElementById('filter-bar'), store);
-  const stopList = createStopList(document.getElementById('stop-list'), { onSelect: select });
+  const stopList = createStopList(document.getElementById('stop-list'), {
+    onSelect: select,
+    onHover: (id) => store.setState({ hoveredId: id }),
+  });
   const stopDetail = createStopDetail(document.getElementById('stop-detail'), { onClose: clearSelection });
+  const viewToggle = createViewToggle(document.getElementById('view-toggle-root'), {
+    onChange: (mode) => store.setState({ mobileView: mode }),
+  });
 
   const statusEl = document.getElementById('load-status');
   const metaEl = document.getElementById('data-meta');
@@ -59,14 +81,29 @@ async function main() {
     lastNearMeStatus = status;
   }
 
+  // render() re-runs on every state change, including ones that don't
+  // touch filtering at all (selecting a stop, hovering a row) — without
+  // this cache, that would re-filter all ~8,700 stops AND hand the map and
+  // the virtualized list a brand-new array reference every time, which for
+  // the map means clusterGroup rebuilding its entire layer set on a mere
+  // selection change, and for the list means losing scroll position because
+  // it can't tell "new search results" from "same results, different
+  // selection". Keyed on the actual filter inputs, not on `state` itself.
+  let lastFilterKey = null;
+  let lastFilterResult = null;
   function visibleStopsWithDistance(state) {
+    const { status, lat, lon, radiusM } = state.nearMe;
+    const key = `${state.query} ${state.accessibleOnly} ${status} ${lat} ${lon} ${radiusM}`;
+    if (key === lastFilterKey) return lastFilterResult;
+    lastFilterKey = key;
+
     const filtered = allStops.filter(
       (stop) => (!state.accessibleOnly || isAccessible(stop)) && matchesQuery(stop, state.query)
     );
 
-    const { status, lat, lon, radiusM } = state.nearMe;
     if (status !== 'active' || lat == null) {
-      return { visible: filtered, distanceById: null };
+      lastFilterResult = { visible: filtered, distanceById: null };
+      return lastFilterResult;
     }
 
     const distanceById = new Map();
@@ -79,9 +116,11 @@ async function main() {
       }
     }
     withinRadius.sort((a, b) => distanceById.get(a.id) - distanceById.get(b.id));
-    return { visible: withinRadius, distanceById };
+    lastFilterResult = { visible: withinRadius, distanceById };
+    return lastFilterResult;
   }
 
+  let lastVisibleRendered = null;
   function render(state) {
     handleNearMeSideEffect(state);
 
@@ -91,14 +130,30 @@ async function main() {
     filterBar.sync(state);
     filterBar.setCount(visible.length, allStops.length, nearMeActive);
     stopList.render(visible, state.selectedId, { distanceById });
-    mapView.setVisible(visible);
+    // clusterGroup.clearLayers()+addLayers() over thousands of markers is
+    // real work — skip it on renders that only changed selection/hover,
+    // which the visibleStopsWithDistance cache surfaces as a stable
+    // reference here.
+    if (visible !== lastVisibleRendered) {
+      mapView.setVisible(visible);
+      lastVisibleRendered = visible;
+    }
     mapView.select(state.selectedId);
+    mapView.setHovered(state.hoveredId);
     stopDetail.render(
       state.selectedId ? stopsById.get(state.selectedId) : null,
       { distanceM: state.selectedId ? distanceById?.get(state.selectedId) : undefined }
     );
 
+    // Covers both directions of Task 6's sync requirement: a list click
+    // already has its row in view, so this only visibly moves anything
+    // when the selection came from a map-pin click instead — scrollToId
+    // is a no-op if the row's already on screen.
+    if (state.selectedId) stopList.scrollToId(state.selectedId);
+
     mapView.setUserLocation(nearMeActive ? { lat: state.nearMe.lat, lon: state.nearMe.lon } : null, state.nearMe.radiusM);
+    viewToggle.sync(state.mobileView);
+    document.body.classList.toggle('is-list-view', state.mobileView === 'list');
 
     if (!initialFitDone && visible.length && !nearMeActive) {
       mapView.fitToStops(visible);
@@ -131,13 +186,6 @@ async function main() {
       document.getElementById('weather-box').hidden = false;
     })
     .catch((err) => console.log('Weather widget unavailable:', err.message));
-
-  const menuButton = document.getElementById('menu-toggle');
-  const sidebar = document.getElementById('sidebar');
-  menuButton.addEventListener('click', () => {
-    const open = sidebar.classList.toggle('is-open');
-    menuButton.setAttribute('aria-expanded', String(open));
-  });
 }
 
 main();
