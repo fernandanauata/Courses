@@ -1,4 +1,5 @@
 import { isAccessible } from './stops.js';
+import { WHEELCHAIR_ICON_SVG } from './util.js';
 
 // Metro Vancouver, roughly Tsawwassen to Maple Ridge — matches the extent
 // of stops in data/stops.json, with a little padding.
@@ -37,7 +38,7 @@ function stopIcon(stop, { selected = false } = {}) {
   const size = accessible ? 26 : 16;
   return L.divIcon({
     className: 'stop-marker',
-    html: `<span class="${classes.join(' ')}">${accessible ? '♿' : ''}</span>`,
+    html: `<span class="${classes.join(' ')}">${accessible ? WHEELCHAIR_ICON_SVG : ''}</span>`,
     iconSize: [size, size],
     iconAnchor: [size / 2, size / 2],
   });

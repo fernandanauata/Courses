@@ -1,5 +1,5 @@
 import { isAccessible, accessibilityLabel, splitStopName, scheduleUrl } from '../stops.js';
-import { escapeHtml } from '../util.js';
+import { escapeHtml, WHEELCHAIR_ICON_SVG } from '../util.js';
 import { formatDistance } from '../geo.js';
 import { getUpcomingDepartures } from '../departures.js';
 
@@ -32,7 +32,7 @@ export function createStopDetail(root, { onClose }) {
       <button type="button" id="detail-close" class="detail-close" aria-label="Close stop details">&times;</button>
       <h2 class="detail-title">${direction ? `<span class="detail-direction">${direction}</span> ` : ''}${escapeHtml(place)}</h2>
       <p class="detail-badge ${accessible ? 'is-accessible' : 'is-limited'}">
-        <span aria-hidden="true">${accessible ? '♿' : '—'}</span> ${accessibilityLabel(stop)}
+        <span aria-hidden="true">${accessible ? WHEELCHAIR_ICON_SVG : '—'}</span> ${accessibilityLabel(stop)}
       </p>
       ${distanceM != null ? `<p class="detail-distance">${formatDistance(distanceM)} away</p>` : ''}
       <dl class="detail-facts">

@@ -1,35 +1,88 @@
 /* ---------------------------------------------------------------------
    Design tokens
+   ------------------------------------------------------------------
+   Sourced from the project's shared tokens.ts (a single-theme Framer
+   design system) — see the mapping notes below each value. tokens.ts
+   itself has no dark-mode branch; this project already supports one
+   (prefers-color-scheme), so the dark block derives its values from
+   other steps already present in that same source palette (documented
+   per-line) rather than inventing new colors or dropping the feature.
    ------------------------------------------------------------------ */
 :root {
-    --color-bg: #f5f6f8;
-    --color-surface: #ffffff;
-    --color-border: #e1e4e8;
-    --color-text: #1c1f24;
-    --color-text-muted: #5a6069;
-    --color-accent: #0b5fff;
-    --color-accent-contrast: #ffffff;
-    --color-accessible: #1a73e8;
-    --color-limited: #8a8f98;
-    --color-focus: #0b5fff;
-    --shadow-panel: 0 8px 24px rgba(20, 24, 33, 0.16);
+    /* colors.background.subtle / colors.background.default — this app is
+       edge-to-edge map with floating white UI on top, the inverse of a
+       typical content page, so the mapping is by role, not by name: the
+       lighter "surface" tone is what floats (header/sidebar/panels), the
+       "bg" tone recedes (inputs, hover states, chip fills inside them). */
+    --color-bg: #f2f5f3;
+    --color-surface: #fafbfa;
+    --color-border: #c2d2c5; /* colors.border.default */
+    --color-border-strong: #4e6b53; /* colors.border.strong */
+    --color-text: #4b4b4b; /* colors.text.primary */
+    --color-text-strong: #1a1a1a; /* colors.text.secondary — headings/titles */
+    --color-text-muted: #6e6e6e; /* colors.text.muted */
+    /* colors.brand.primary[600] == getSemanticTokens().action.primary —
+       the token file's own primary interactive/button color. */
+    --color-accent: #5c7960;
+    --color-accent-contrast: #ffffff; /* colors.text.onSemantic */
+    /* Reuses --color-accent rather than a separate hex: this app's
+       "accessible" marker is the positive/primary state, and sage green
+       is literally this palette's primary brand hue. */
+    --color-accessible: var(--color-accent);
+    --color-limited: #a0a0a0; /* colors.text.disabled — deliberately muted */
+    /* colors.brand.accent.default / colors.border.focus — a color
+       intentionally distinct from --color-accent above (see tokens.ts:
+       "focus indicators need to stand out against both light and dark
+       surfaces," kept as its own hue rather than reusing the brand green). */
+    --color-focus: #6a4c7a;
+    /* colors.semantic.error.default (#c05050) measures 4.49:1 on
+       --color-surface — a hair under the 4.5:1 AA floor at this text's
+       normal (not "large") size. colors.semantic.error.strong clears it
+       at 5.17:1 without changing hue, so that's the one in use here. */
+    --color-error: #a94f4f;
+    --color-warning: #9c6a19; /* colors.semantic.warning.default */
+    --shadow-panel: 0 8px 24px rgba(26, 26, 26, 0.12), 0 2px 6px rgba(26, 26, 26, 0.08); /* elevation.modal */
+    --shadow-card: 0 1px 2px rgba(26, 26, 26, 0.06), 0 1px 1px rgba(26, 26, 26, 0.04); /* elevation.card */
+    --transition-smooth: all 0.16s cubic-bezier(0.2, 0.8, 0.2, 1); /* transitions.smooth */
+    --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    /* tokens.ts pairs headings with a separate "Inter Display" optical
+       family; that face isn't published on Google Fonts, and this app's
+       headings are modest enough that the distinction wouldn't show —
+       falls back to the same Inter already loaded rather than a second
+       font request for no visible benefit. */
+    --font-display: var(--font-body);
     --header-height: 3.5rem;
     --sidebar-width: 22rem;
-    --radius: 0.75rem;
+    --radius: 0.75rem; /* == radius.container (12px) */
+    --radius-card: 0.5rem; /* == radius.card (8px) */
+    --radius-control: 0.375rem; /* == radius.control (6px) — inputs, selects, icon buttons */
+    --radius-outer: 1rem; /* == radius.outer (16px) — sheet/panel top corners */
+    --radius-full: 999px; /* == radius.full — pills, chips, circular buttons */
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --color-bg: #14161a;
-        --color-surface: #1d2026;
-        --color-border: #2c3038;
-        --color-text: #eef0f3;
-        --color-text-muted: #9aa0aa;
-        --color-accent: #5b9dff;
-        --color-accent-contrast: #0b1220;
-        --color-accessible: #5b9dff;
-        --color-limited: #6b7280;
+        /* No dark entries exist in the source tokens (it's single-theme by
+           design) — these are derived from the same palette's own darker
+           and lighter steps rather than freehand colors, so the app stays
+           recognizably the same brand in both modes. */
+        --color-bg: #141414; /* colors.background.inverse */
+        --color-surface: #1e1e1e; /* background.inverse, lifted slightly for elevation */
+        --color-border: #3e5644; /* colors.brand.primary[800] */
+        --color-border-strong: #5c7960; /* colors.brand.primary[600] */
+        --color-text: #ffffff; /* colors.text.onDark */
+        --color-text-strong: #ffffff;
+        --color-text-muted: #c5d5c8; /* colors.brand.primary[300] */
+        --color-accent: #a4bea8; /* colors.brand.primary[400] — lightened so it still pops on dark */
+        --color-accent-contrast: #2b3e31; /* colors.brand.primary[900] */
+        --color-accessible: var(--color-accent);
+        --color-focus: #d8cee0; /* colors.brand.accent.subtle */
+        /* error.strong (used above) drops to 3.44:1 on this dark surface —
+           lightened toward white until it clears 4.5:1 again (5.52:1),
+           same derivation approach as --color-accent above. */
+        --color-error: #cd7373;
         --shadow-panel: 0 8px 28px rgba(0, 0, 0, 0.5);
+        --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.4);
     }
 }
 
@@ -44,10 +97,15 @@ body {
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: var(--font-body);
     color: var(--color-text);
     background: var(--color-bg);
     overflow: hidden;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-display);
+    color: var(--color-text-strong);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -78,7 +136,7 @@ a {
     background: var(--color-accent);
     color: var(--color-accent-contrast);
     padding: 0.6rem 1rem;
-    border-radius: 0 0 0.5rem 0.5rem;
+    border-radius: 0 0 var(--radius-control) var(--radius-control);
     transition: top 0.15s ease;
 }
 
@@ -136,11 +194,16 @@ a {
     width: 2.25rem;
     height: 2.25rem;
     border: 1px solid var(--color-border);
-    border-radius: 0.5rem;
+    border-radius: var(--radius-control);
     background: var(--color-surface);
     color: var(--color-text);
     cursor: pointer;
     flex-shrink: 0;
+    transition: var(--transition-smooth);
+}
+
+.menu-toggle:hover {
+    background: var(--color-bg);
 }
 
 .app-body {
@@ -175,7 +238,7 @@ a {
     max-height: 45%;
     transform: translateY(calc(100% - 3.25rem));
     transition: transform 0.25s ease;
-    border-radius: 1rem 1rem 0 0;
+    border-radius: var(--radius-outer) var(--radius-outer) 0 0;
 }
 
 .sidebar::before {
@@ -186,7 +249,7 @@ a {
     transform: translateX(-50%);
     width: 2.5rem;
     height: 0.25rem;
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     background: var(--color-border);
 }
 
@@ -208,7 +271,7 @@ a {
 }
 
 .load-status.is-error {
-    color: #d1394a;
+    color: var(--color-error);
 }
 
 .stop-list {
@@ -279,13 +342,14 @@ a {
     gap: 0.4rem;
     padding: 0.45rem 0.75rem;
     border: 1px solid var(--color-border);
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     background: var(--color-bg);
     color: var(--color-text);
     font-size: 0.82rem;
     font-weight: 600;
     cursor: pointer;
     flex-shrink: 0;
+    transition: var(--transition-smooth);
 }
 
 .near-me-button.is-active {
@@ -322,7 +386,7 @@ a {
 .field--inline select {
     padding: 0.35rem 0.5rem;
     border: 1px solid var(--color-border);
-    border-radius: 0.4rem;
+    border-radius: var(--radius-control);
     background: var(--color-surface);
     color: var(--color-text);
     font-size: 0.8rem;
@@ -340,7 +404,7 @@ a {
     width: 100%;
     padding: 0.55rem 0.75rem;
     border: 1px solid var(--color-border);
-    border-radius: 0.5rem;
+    border-radius: var(--radius-control);
     background: var(--color-bg);
     color: var(--color-text);
     font-size: 0.95rem;
@@ -379,6 +443,7 @@ a {
     line-height: 1;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
     border: 2px solid #fff;
+    transition: var(--transition-smooth);
 }
 
 .stop-pin--accessible {
@@ -404,6 +469,12 @@ a {
 }
 
 .stop-marker .is-selected {
+    /* Deliberately not a brand token: this ring has to read as "selected"
+       against a marker that's already sage-green or purple-focus-ringed,
+       on top of a basemap that shifts from near-white to near-black
+       between themes — an amber outside the brand palette stays visible
+       in every one of those combinations, where any brand hue would
+       camouflage against itself in at least one. */
     outline: 3px solid #ffb300;
     outline-offset: 1px;
 }
@@ -433,7 +504,7 @@ a {
 }
 
 .cluster-badge--mid {
-    background: #b8860b;
+    background: var(--color-warning);
 }
 
 .cluster-badge--low {
@@ -481,8 +552,9 @@ a {
     align-items: flex-start;
     gap: 0.6rem;
     padding: 0.55rem 0.6rem;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-card);
     cursor: pointer;
+    transition: var(--transition-smooth);
 }
 
 .stop-row:hover {
@@ -573,7 +645,7 @@ a {
     overflow-y: auto;
     inset: auto 0 0 0;
     max-height: 60%;
-    border-radius: 1rem 1rem 0 0;
+    border-radius: var(--radius-outer) var(--radius-outer) 0 0;
 }
 
 .detail-close {
@@ -585,10 +657,15 @@ a {
     border-radius: 50%;
     border: 1px solid var(--color-border);
     background: var(--color-bg);
+    transition: var(--transition-smooth);
     color: var(--color-text);
     font-size: 1.1rem;
     line-height: 1;
     cursor: pointer;
+}
+
+.detail-close:hover {
+    background: var(--color-border);
 }
 
 .detail-title {
@@ -608,7 +685,7 @@ a {
     font-size: 0.85rem;
     font-weight: 600;
     padding: 0.3rem 0.6rem;
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     margin: 0 0 1rem;
 }
 
@@ -664,7 +741,7 @@ a {
 .detail-routes li {
     background: var(--color-bg);
     border: 1px solid var(--color-border);
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     padding: 0.2rem 0.6rem;
     font-size: 0.78rem;
 }
@@ -681,7 +758,7 @@ a {
     color: var(--color-text-muted);
     background: var(--color-bg);
     border: 1px solid var(--color-border);
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     padding: 0.1rem 0.45rem;
     margin-left: 0.4rem;
     vertical-align: middle;
@@ -762,10 +839,10 @@ p.detail-departures__list.is-loading {
     z-index: 12;
     background: var(--color-surface);
     border: 1px solid var(--color-border);
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     padding: 0.4rem 0.9rem;
     font-size: 0.8rem;
-    box-shadow: var(--shadow-panel);
+    box-shadow: var(--shadow-card);
     display: flex;
     align-items: center;
     gap: 0.4rem;

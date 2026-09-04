@@ -1,5 +1,5 @@
 import { isAccessible, splitStopName } from '../stops.js';
-import { escapeHtml } from '../util.js';
+import { escapeHtml, WHEELCHAIR_ICON_SVG } from '../util.js';
 import { formatDistance } from '../geo.js';
 
 // Rendering every match as a DOM row doesn't scale to thousands of results —
@@ -38,7 +38,7 @@ export function createStopList(root, { onSelect }) {
       return `
         <div class="stop-row${selected ? ' is-selected' : ''}" role="option" tabindex="0"
              data-stop-id="${stop.id}" aria-selected="${selected}">
-          <span class="stop-row__badge ${accessible ? 'is-accessible' : 'is-limited'}" aria-hidden="true">${accessible ? '♿' : ''}</span>
+          <span class="stop-row__badge ${accessible ? 'is-accessible' : 'is-limited'}" aria-hidden="true">${accessible ? WHEELCHAIR_ICON_SVG : ''}</span>
           <span class="stop-row__text">
             <span class="stop-row__name">${direction ? `<em>${direction}</em> ` : ''}${escapeHtml(place)}</span>
             <span class="stop-row__meta">#${escapeHtml(stop.code)}${routePreview ? ` · ${escapeHtml(routePreview)}` : ''}</span>
