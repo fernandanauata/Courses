@@ -1,116 +1,614 @@
+/* ---------------------------------------------------------------------
+   Design tokens
+   ------------------------------------------------------------------ */
+:root {
+    --color-bg: #f5f6f8;
+    --color-surface: #ffffff;
+    --color-border: #e1e4e8;
+    --color-text: #1c1f24;
+    --color-text-muted: #5a6069;
+    --color-accent: #0b5fff;
+    --color-accent-contrast: #ffffff;
+    --color-accessible: #1a73e8;
+    --color-limited: #8a8f98;
+    --color-focus: #0b5fff;
+    --shadow-panel: 0 8px 24px rgba(20, 24, 33, 0.16);
+    --header-height: 3.5rem;
+    --sidebar-width: 22rem;
+    --radius: 0.75rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-bg: #14161a;
+        --color-surface: #1d2026;
+        --color-border: #2c3038;
+        --color-text: #eef0f3;
+        --color-text-muted: #9aa0aa;
+        --color-accent: #5b9dff;
+        --color-accent-contrast: #0b1220;
+        --color-accessible: #5b9dff;
+        --color-limited: #6b7280;
+        --shadow-panel: 0 8px 28px rgba(0, 0, 0, 0.5);
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
 html,
 body {
-    font-family: Arial, sans-serif;
     height: 100%;
     margin: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--color-text);
+    background: var(--color-bg);
+    overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+a {
+    color: var(--color-accent);
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+.skip-link {
+    position: absolute;
+    top: -3rem;
+    left: 0.5rem;
+    z-index: 100;
+    background: var(--color-accent);
+    color: var(--color-accent-contrast);
+    padding: 0.6rem 1rem;
+    border-radius: 0 0 0.5rem 0.5rem;
+    transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------
+   Layout
+   ------------------------------------------------------------------ */
+.app-header {
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0 1rem;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    position: relative;
+    z-index: 20;
+}
+
+.app-header h1 {
+    font-size: 1.05rem;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.app-header__place {
+    font-weight: 400;
+    color: var(--color-text-muted);
+}
+
+.app-header__meta {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: none;
+}
+
+.menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.app-body {
+    position: relative;
+    height: calc(100% - var(--header-height));
+    display: flex;
+}
+
+.map {
+    flex: 1;
+    height: 100%;
+    background: var(--color-bg);
+    /* Leaflet's internal panes/controls use z-index values up to 1000.
+       Without a stacking context of its own, those values would leak out
+       and paint over sibling UI (the detail panel, the mobile sidebar)
+       regardless of this element's z-index. */
+    isolation: isolate;
+}
+
+/* ---------------------------------------------------------------------
+   Sidebar (bottom sheet on mobile, docked panel on wider screens)
+   ------------------------------------------------------------------ */
+.sidebar {
+    position: absolute;
+    inset: auto 0 0 0;
+    z-index: 15;
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    box-shadow: var(--shadow-panel);
+    display: flex;
+    flex-direction: column;
+    max-height: 45%;
+    transform: translateY(calc(100% - 3.25rem));
+    transition: transform 0.25s ease;
+    border-radius: 1rem 1rem 0 0;
+}
+
+.sidebar::before {
+    content: "";
+    position: absolute;
+    top: 0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2.5rem;
+    height: 0.25rem;
+    border-radius: 999px;
+    background: var(--color-border);
+}
+
+.sidebar.is-open {
+    transform: translateY(0);
+}
+
+.filter-bar,
+.load-status {
+    flex-shrink: 0;
+    padding: 1.25rem 1rem 0.5rem;
+}
+
+.load-status {
+    padding-top: 0;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    min-height: 1.1rem;
+}
+
+.load-status.is-error {
+    color: #d1394a;
+}
+
+.stop-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 0.5rem 1rem;
+}
+
+@media (min-width: 768px) {
+    .menu-toggle {
+        display: none;
+    }
+
+    .app-header__meta {
+        display: block;
+    }
+
+    .sidebar {
+        position: static;
+        width: var(--sidebar-width);
+        max-height: none;
+        height: 100%;
+        transform: none;
+        border-radius: 0;
+        border-top: none;
+        border-right: 1px solid var(--color-border);
+        box-shadow: none;
+    }
+
+    .sidebar::before {
+        display: none;
+    }
+
+    .app-body {
+        flex-direction: row;
+    }
+}
+
+/* ---------------------------------------------------------------------
+   Filter bar
+   ------------------------------------------------------------------ */
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+}
+
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.field {
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.field__label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin-bottom: 0.3rem;
+}
+
+.field input[type="search"] {
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-size: 0.95rem;
+}
+
+.toggle-field {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+}
+
+.toggle-field input {
+    width: 1.1rem;
+    height: 1.1rem;
+    accent-color: var(--color-accent);
+}
+
+.result-count {
+    margin: 0.25rem 0 0;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+}
+
+/* ---------------------------------------------------------------------
+   Stop pins (shared between Leaflet markers and the legend)
+   ------------------------------------------------------------------ */
+.stop-pin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #fff;
+    line-height: 1;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+    border: 2px solid #fff;
+}
+
+.stop-pin--accessible {
+    width: 26px;
+    height: 26px;
+    font-size: 14px;
+    background: var(--color-accessible);
+}
+
+.stop-pin--limited {
+    width: 14px;
+    height: 14px;
+    background: var(--color-limited);
+    opacity: 0.85;
+}
+
+.legend .stop-pin--accessible,
+.legend .stop-pin--limited {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+    flex-shrink: 0;
+}
+
+.stop-marker .is-selected {
+    outline: 3px solid #ffb300;
+    outline-offset: 1px;
+}
+
+.stop-cluster {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cluster-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.8rem;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+.cluster-badge--high {
+    background: var(--color-accessible);
+}
+
+.cluster-badge--mid {
+    background: #b8860b;
+}
+
+.cluster-badge--low {
+    background: var(--color-limited);
+}
+
+/* ---------------------------------------------------------------------
+   Stop list rows
+   ------------------------------------------------------------------ */
+.stop-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.55rem 0.6rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.stop-row:hover {
+    background: var(--color-bg);
+}
+
+.stop-row.is-selected {
+    background: var(--color-bg);
+    box-shadow: inset 3px 0 0 var(--color-accent);
+}
+
+.stop-row__badge {
+    flex-shrink: 0;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 0.75rem;
+    margin-top: 0.1rem;
+}
+
+.stop-row__badge.is-accessible {
+    background: var(--color-accessible);
+}
+
+.stop-row__badge.is-limited {
+    background: var(--color-limited);
+    width: 0.7rem;
+    height: 0.7rem;
+    margin: 0.4rem 0.35rem 0;
+}
+
+.stop-row__text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.stop-row__name {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.stop-row__name em {
+    font-style: normal;
+    color: var(--color-text-muted);
+    font-weight: 400;
+}
+
+.stop-row__meta {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.empty-state,
+.list-hint {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    padding: 0.75rem 0.6rem;
+}
+
+/* ---------------------------------------------------------------------
+   Stop detail panel
+   ------------------------------------------------------------------ */
+.stop-detail {
+    position: absolute;
+    z-index: 25;
+    background: var(--color-surface);
+    box-shadow: var(--shadow-panel);
+    padding: 1.25rem;
+    overflow-y: auto;
+    inset: auto 0 0 0;
+    max-height: 60%;
+    border-radius: 1rem 1rem 0 0;
+}
+
+.detail-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.detail-title {
+    margin: 0 2rem 0.5rem 0;
+    font-size: 1.15rem;
+}
+
+.detail-direction {
+    color: var(--color-text-muted);
+    font-weight: 400;
+}
+
+.detail-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.3rem 0.6rem;
+    border-radius: 999px;
+    margin: 0 0 1rem;
+}
+
+.detail-badge.is-accessible {
+    color: var(--color-accessible);
+    background: color-mix(in srgb, var(--color-accessible) 15%, transparent);
+}
+
+.detail-badge.is-limited {
+    color: var(--color-text-muted);
+    background: var(--color-bg);
+}
+
+.detail-facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem 1rem;
+    margin: 0 0 1rem;
+}
+
+.detail-facts dt {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--color-text-muted);
+}
+
+.detail-facts dd {
+    margin: 0.1rem 0 0;
+    font-size: 0.9rem;
+}
+
+.detail-subhead {
+    font-size: 0.85rem;
+    margin: 0 0 0.4rem;
+}
+
+.detail-routes {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0 0 1.25rem;
     padding: 0;
 }
 
-h2 {
-  margin-top: 40px;
-}
-h2,
-p,
-li,
-form {
-    color: #525454;
+.detail-routes li {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.78rem;
 }
 
-select {
-  width: 100%;
+.detail-link {
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
 }
 
-.container-weather {
-    float: right;
-    position: relative;
-    z-index: 2;
-    display: flex;
-    justify-content: flex-end;
-    padding: 0.5%;
-    text-align: center;
+.detail-link:hover {
+    text-decoration: underline;
 }
 
+@media (min-width: 768px) {
+    .stop-detail {
+        inset: auto 1rem 1rem auto;
+        left: auto;
+        width: 22rem;
+        max-height: calc(100% - 2rem);
+        border-radius: var(--radius);
+    }
+}
+
+/* ---------------------------------------------------------------------
+   Weather widget
+   ------------------------------------------------------------------ */
 .weather-box {
-    position: fixed;
-    color: #525454;
-    background-color: rgba(255, 255, 255, 0.9);;
-    padding: 0.5em;
-}
-
-.wweather-check {
-    margin: 0;
-}
-
-.container-menu {
-    position: relative;
-    z-index: 1;
-    padding-top: 1em;
-    padding-left: 1em;
-}
-
-.menubutton {
-    position: fixed;
-    font-size: 2.5em;
-    z-index: 3;
-    cursor: pointer;
-    color: #525454;
-}
-
-.side-menu {
-    top: 0;
-    margin-right: -100vw;
-    left: -180px;
-    bottom: 0;
-    width: 45%;
-    background-color: white;
-    position: fixed;
-    z-index: 2;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    overflow: scroll;
-}
-
-.side-menu-content {
-    margin: 5%;
-    margin-top: 10%;
-}
-
-#map {
-    bottom: 0px;
-    height: 100vh;
-    width: 100vw;
     position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 12;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.8rem;
+    box-shadow: var(--shadow-panel);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
 }
 
-
-/*MEDIA QUERIES*/
-
-@media screen and (min-width: 600px) {
-    .side-menu {
-        width: 40%;
-    }
-    h2 {
-        font-size: 200%;
-    }
-    p {
-        font-size: 100%;
-    }
-    .container-weather {
-      float: none;
-      font-size: initial;
-    }
-    .weather-check {
-      margin: 0;
-    }
+/* ---------------------------------------------------------------------
+   Leaflet overrides
+   ------------------------------------------------------------------ */
+.leaflet-container {
+    font-family: inherit;
+    background: var(--color-bg);
 }
 
-@media screen and (min-width: 1140px) {
-    .side-menu {
-        width: 20%;
-    }
+.leaflet-tooltip {
+    font-size: 0.75rem;
 }
