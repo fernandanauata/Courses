@@ -21,10 +21,20 @@ export function createStoryModal(root) {
         </button>
         <h2 id="story-title">Why this exists</h2>
         <div class="modal-body">
-          <p>When my sister, who uses a wheelchair, needed to get around the city, the hardest part usually wasn't the bus ride itself — it was not knowing, until she was already at a stop, whether she could actually board there.</p>
-          <p>TransLink publishes that information, but it's buried in a feed built for developers, not for someone standing at a corner deciding whether to risk the next block. This map turns that data into something usable: every stop TransLink tracks, clearly marked as accessible or not, searchable by name or route, before anyone leaves the house.</p>
-          <p>It started as a favor for one person. If it saves someone else the same guesswork, it's done its job.</p>
+          <p>Nearly a decade ago, I built this tool so my sister—who is a wheelchair user—could navigate Vancouver safely when visiting me.</p>
+          <p>TransLink publishes stop accessibility data, but it’s buried in developer feeds rather than built for someone making real-time decisions on a street corner. This map turns that raw data into something usable: every tracked stop, clearly marked as accessible or not, searchable by name or route before anyone leaves the house.</p>
+          <p>Recently, I came back to give the app a long-overdue checkup—fixing broken API connections and bringing its digital accessibility up to modern standards. It started as a personal project for one person, but if it saves someone else the same guesswork, it’s done its job.</p>
         </div>
+        <footer class="modal-footer">
+          <p class="modal-footer__copyright">&copy; 2026 Fernanda Nauata</p>
+          <nav class="modal-footer__links" aria-label="Fernanda Nauata's website and social profiles">
+            <a href="https://fernandanauata.com/" target="_blank" rel="noopener noreferrer">Website</a>
+            <a href="https://www.linkedin.com/in/fernanda-nauata/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://github.com/fernandanauata" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://www.artstation.com/fernandanauata" target="_blank" rel="noopener noreferrer">ArtStation</a>
+            <a href="https://www.instagram.com/fernauata" target="_blank" rel="noopener noreferrer">Instagram</a>
+          </nav>
+        </footer>
       </div>
     </div>
   `;
