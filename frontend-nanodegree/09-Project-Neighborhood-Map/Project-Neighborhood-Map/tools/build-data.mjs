@@ -18,86 +18,19 @@
  * -------------------------------------------------------------------------
  */
 
-import { createReadStream } from 'node:fs';
-import { readFile, writeFile, mkdir, mkdtemp, rm } from 'node:fs/promises';
-import { createInterface } from 'node:readline';
-import { execFileSync } from 'node:child_process';
-import { tmpdir } from 'node:os';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
+import { forEachRow, resolveGtfsDir, loadRouteNames, loadTripRoutes } from './gtfsUtil.mjs';
 
-const GTFS_URL = 'https://gtfs-static.translink.ca/gtfs/google_transit.zip';
 const OUT_FILE = path.resolve(import.meta.dirname, '..', 'data', 'stops.json');
-
-/** Parse one CSV line, respecting quoted fields (GTFS is RFC 4180-ish). */
-function parseCsvLine(line) {
-  const out = [];
-  let cur = '';
-  let inQuotes = false;
-  for (let i = 0; i < line.length; i++) {
-    const ch = line[i];
-    if (inQuotes) {
-      if (ch === '"') {
-        if (line[i + 1] === '"') { cur += '"'; i++; }
-        else inQuotes = false;
-      } else cur += ch;
-    } else if (ch === '"') inQuotes = true;
-    else if (ch === ',') { out.push(cur); cur = ''; }
-    else cur += ch;
-  }
-  out.push(cur);
-  return out;
-}
-
-/** Stream a GTFS text file, invoking `onRow(recordObject)` for each data row. */
-async function forEachRow(filePath, onRow) {
-  const rl = createInterface({ input: createReadStream(filePath), crlfDelay: Infinity });
-  let header = null;
-  for await (const line of rl) {
-    if (!line) continue;
-    const fields = parseCsvLine(line);
-    if (!header) {
-      header = fields.map((f) => f.replace(/^﻿/, '').trim());
-      continue;
-    }
-    const rec = {};
-    for (let i = 0; i < header.length; i++) rec[header[i]] = fields[i];
-    onRow(rec);
-  }
-}
-
-async function resolveGtfsDir(arg) {
-  if (arg && !arg.endsWith('.zip')) return { dir: arg, cleanup: async () => {} };
-
-  const work = await mkdtemp(path.join(tmpdir(), 'translink-gtfs-'));
-  let zipPath = arg;
-  if (!zipPath) {
-    zipPath = path.join(work, 'google_transit.zip');
-    console.log(`Downloading ${GTFS_URL} ...`);
-    const res = await fetch(GTFS_URL);
-    if (!res.ok) throw new Error(`Download failed: HTTP ${res.status}`);
-    await writeFile(zipPath, Buffer.from(await res.arrayBuffer()));
-  }
-  console.log(`Extracting ${zipPath} ...`);
-  execFileSync('unzip', ['-o', zipPath, '-d', work], { stdio: 'ignore' });
-  return { dir: work, cleanup: () => rm(work, { recursive: true, force: true }) };
-}
 
 async function main() {
   const { dir, cleanup } = await resolveGtfsDir(process.argv[2]);
   try {
-    // routes: route_id -> display name
-    const routeName = new Map();
-    await forEachRow(path.join(dir, 'routes.txt'), (r) => {
-      const name = (r.route_short_name || r.route_long_name || r.route_id).trim();
-      routeName.set(r.route_id, name);
-    });
+    const routeName = await loadRouteNames(dir);
     console.log(`routes: ${routeName.size}`);
 
-    // trips: trip_id -> route_id
-    const tripRoute = new Map();
-    await forEachRow(path.join(dir, 'trips.txt'), (r) => {
-      tripRoute.set(r.trip_id, r.route_id);
-    });
+    const tripRoute = await loadTripRoutes(dir);
     console.log(`trips: ${tripRoute.size}`);
 
     // stops: keep boardable stops/platforms (location_type 0 or blank)
